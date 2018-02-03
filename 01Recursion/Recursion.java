@@ -1,6 +1,12 @@
 public class Recursion{
   public int fact(int n){
-    return 0;
+    if(n<0){
+      throw new IllegalArgumentException();
+    }
+    if(n==0){
+      return 1;
+    }
+    return n*fact(n-1);
   }
   public int fib(int n){
     return 0;
@@ -12,7 +18,7 @@ public class Recursion{
     Recursion recur=new Recursion();
     //tests for factorial
     System.out.println(recur.fact(0));//expecting 1
-    System.out.println(recur.fact(-1));//expecting exception
+    //System.out.println(recur.fact(-1));//expecting exception
     System.out.println(recur.fact(2));//expecting 2
     System.out.println(recur.fact(6));//expecting 720
     System.out.println(recur.fact(10));//expecting 3628800
