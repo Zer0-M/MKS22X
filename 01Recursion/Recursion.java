@@ -43,4 +43,26 @@ public class Recursion{
     guess =  (n/guess+guess)/2.0;
     return sqrtHelper(n,guess);
   }
+  public static boolean isSumPossible(int n, int target){
+    return sumHelper(3,n,target);
+  }
+  public static boolean sumHelper(int start, int n, int target){
+        if(start>n){
+      return false;
+    }
+     if(n<=0){
+       return false;
+     }
+     if(target==n||start==target){
+      return true;
+    }
+     if(sumHelper(start+1,n,target-start)||sumHelper(n,n-1,target-n)){
+        return true;
+     }
+     return false;
+  }
+   public static void main(String[] args) {
+      System.out.println(isSumPossible(4,8));
+   }
+
 }
