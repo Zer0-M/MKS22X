@@ -30,6 +30,14 @@ public class QueenBoard{
     public int countSolutions(){
 	return 0;
     }
+    public static void main(String[] arg){	
+	for(int i=1;i<6;i++){
+	    QueenBoard q=new QueenBoard(i);
+	    System.out.println(q);
+	    System.out.println(q.solve());
+	    System.out.println(q.countSolutions());
+	}
+    }
   
 
 }
