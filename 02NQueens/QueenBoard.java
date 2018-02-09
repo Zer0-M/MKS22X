@@ -1,5 +1,6 @@
+import java.util.*;
 public class QueenBoard{
-    private int[][]board;
+    public int[][]board;
     public QueenBoard(int size){
 	board=new int[size][size];
     }
@@ -27,6 +28,29 @@ public class QueenBoard{
 	}
 	return Board;
     }
+    public boolean addQueen(int r, int c){
+	board[r][c]-=1;
+	for(int i=r+1;i<board.length;i++){
+	    board[i][c]+=1;
+	    for(int j=c+1;j<board[i].length;j++){
+		board[r][j]+=1;
+		board[i][j]+=1;	
+	    }
+	}
+	for(int i=r-1;i>=0;i--){
+	    board[i][c]+=1;
+	    for(int j=c-1;j>=0;j--){
+		board[r][j]+=1;
+		board[i][j]+=1;	
+	    }
+	}
+	return true;
+
+	
+    }
+    private boolean removeQueen(int r, int c){
+	return true;
+    }
   
     /**
      *@return false when the board is not solveable and leaves the board filled with zeros; 
@@ -47,7 +71,9 @@ public class QueenBoard{
     public static void main(String[] arg){	
 	for(int i=1;i<6;i++){
 	    QueenBoard q=new QueenBoard(i);
+	    System.out.println(q.addQueen(0,0));
 	    System.out.println(q);
+	    System.out.println(Arrays.deepToString(q.board));
 	    System.out.println(q.solve());
 	    System.out.println(q.countSolutions());
 	}
