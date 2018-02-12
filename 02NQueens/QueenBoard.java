@@ -77,6 +77,9 @@ public class QueenBoard{
       return solver(0,0);
     }
   public boolean solver(int r,int c){
+    if((board.length==2||board.length==3)&&countQueens==board.length-1){
+      return true;
+    }
     if(countQueens==board.length){
       return true;
     }
@@ -121,12 +124,12 @@ public class QueenBoard{
     return 0;
     
   }
-    public static void main(String[] arg){	
-	    QueenBoard q=new QueenBoard(4);
-	    //System.out.println(q.solve());
+    public static void main(String[] arg){
+      for(int i=1;i<10;i++){
+	    QueenBoard q=new QueenBoard(i);
+	    System.out.println(q.solve());
       System.out.println(q);
-	    System.out.println(q.countSolutions());
-	
+      }
     }
   
 
