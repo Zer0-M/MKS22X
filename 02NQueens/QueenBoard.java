@@ -104,32 +104,27 @@ public class QueenBoard{
       return counter(0,0,0);
     }
   public int counter(int r, int c,int sum){
-    //System.out.println(toString());
-    //System.out.println(c);
+      
     if(countQueens==board.length){
-      return 1;
+      return sum+=1;
     }
     for(int i=0;i<board.length;i++){
       if(addQueen(i,c)){
-        if(c==0){
-          r+=1;
-        }
-        sum+=counter(0,c+1,sum);
+	int x=counter(0,c+1,sum);
+	System.out.println(x);
+        if(x==sum+1){
+	    sum+=x;
+	}
         removeQueen(i,c);
         }
       }
-    if(r>=board.length-1){
-      return sum;
-    }
-    return 0;
+    return sum;
     
   }
     public static void main(String[] arg){
-      for(int i=1;i<10;i++){
-	    QueenBoard q=new QueenBoard(i);
-	    System.out.println(q.solve());
-      System.out.println(q);
-      }
+	    QueenBoard q=new QueenBoard(4);
+	    System.out.println(q.countSolutions());
+	    System.out.println(q);
     }
   
 
