@@ -1,8 +1,10 @@
 import java.util.*;
 public class QueenBoard{
-    public int[][]board;
+    private int[][]board;
+  private int countQueens;
     public QueenBoard(int size){
 	board=new int[size][size];
+  countQueens=0;
     }
     /**
      *@return The output string formatted as follows:
@@ -14,42 +16,52 @@ public class QueenBoard{
      * etc.
      */
     public String toString(){
-	String Board="";
-	for(int i=0;i<board.length;i++){
-	    for(int j=0;j<board[i].length;j++){
-		if(board[i][j]<0){
-		    Board+="Q ";
-		}
-		else{
-		    Board+="_ ";
-		}
-	    }
-	    Board+="\n";
-	}
-	return Board;
+      String Board="";
+      for(int i=0;i<board.length;i++){
+        for(int j=0;j<board[i].length;j++){
+          if(board[i][j]<0){
+            Board+="Q ";
+          }
+          else{
+            Board+="_ ";
+          }
+        }
+        Board+="\n";
+      }
+      return Board;
     }
-    public boolean addQueen(int r, int c){
-	board[r][c]-=1;
-	for(int i=r+1;i<board.length;i++){
-	    board[i][c]+=1;
-	    for(int j=c+1;j<board[i].length;j++){
-		board[r][j]+=1;
-		board[i][j]+=1;	
-	    }
-	}
-	for(int i=r-1;i>=0;i--){
-	    board[i][c]+=1;
-	    for(int j=c-1;j>=0;j--){
-		board[r][j]+=1;
-		board[i][j]+=1;	
-	    }
-	}
-	return true;
-
-	
+  private boolean addQueen(int r, int c){
+    if(board[r][c]==0){
+      board[r][c]-=1;
+      countQueens+=1;
+      for(int i=c+1;i<board.length;i++){
+        board[r][i]+=1;
+      }
+      for(int i=r+1, j=c+1;i<board.length&&j<board.length;i++, j++){
+        board[i][j]+=1;
+      }
+      for(int i=r-1, j=c+1;j<board.length&&i>=0;i--, j++){
+        board[i][j]+=1;
+      }
+      return true;
     }
+    return false;
+  }
     private boolean removeQueen(int r, int c){
-	return true;
+      board[r][c]+=1;
+      countQueens-=1;
+      for(int i=c+1;i<board.length;i++){
+        board[r][i]-=1;
+      }
+      for(int i=r+1, j=c+1;i<board.length&&j<board.length;i++, j++){
+        board[i][j]-=1;
+      }
+      for(int i=r-1, j=c+1;j<board.length&&i>=0;i--, j++){
+        board[i][j]-=1;
+      }
+
+    return true;
+
     }
   
     /**
@@ -58,8 +70,28 @@ public class QueenBoard{
      *@throws IllegalStateException when the board starts with any non-zero value
      */
     public boolean solve(){
-	return true;
+      if(!addQueen(0,0)){
+        throw new IllegalStateException();
+      }
+      removeQueen(0,0);
+      return solver(0,0);
     }
+  public boolean solver(int r,int c){
+    if(countQueens==board.length){
+      return true;
+    }
+    for(int i=0;i<board.length;i++){
+      if(addQueen(i,c)){
+        if(solver(0,c+1)){
+          return true;
+        }
+      else{
+        removeQueen(i,c);
+        }
+      }
+    }
+    return false;
+  }
   
     /**
      *@return the number of solutions found, and leaves the board filled with only 0's
@@ -69,14 +101,11 @@ public class QueenBoard{
 	return 0;
     }
     public static void main(String[] arg){	
-	for(int i=1;i<6;i++){
-	    QueenBoard q=new QueenBoard(i);
-	    System.out.println(q.addQueen(0,0));
-	    System.out.println(q);
-	    System.out.println(Arrays.deepToString(q.board));
+	    QueenBoard q=new QueenBoard(4);
 	    System.out.println(q.solve());
+      System.out.println(q);
 	    System.out.println(q.countSolutions());
-	}
+	
     }
   
 
