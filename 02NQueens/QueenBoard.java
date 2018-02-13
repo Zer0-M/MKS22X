@@ -77,9 +77,9 @@ public class QueenBoard{
       return solver(0,0);
     }
   public boolean solver(int r,int c){
-    if((board.length==2||board.length==3)&&countQueens==board.length-1){
-      return true;
-    }
+    //if((board.length==2||board.length==3)&&countQueens==board.length-1){
+    //  return true;
+    //}
     if(countQueens==board.length){
       return true;
     }
@@ -101,11 +101,18 @@ public class QueenBoard{
      *@throws IllegalStateException when the board starts with any non-zero value
      */
     public int countSolutions(){
+      if(!addQueen(0,0)){
+        throw new IllegalStateException();
+      }
+      removeQueen(0,0);
       return counter(0,0);
     }
   public int counter(int r, int c){ 
     int sum=0;
-    if(c>=board.length){
+    //if((board.length==2||board.length==3)&&countQueens==board.length-1){
+    //  return 1;
+    //}
+    if(countQueens==board.length){
       return 1;
     }
     for(int i=0;i<board.length;i++){
@@ -118,9 +125,11 @@ public class QueenBoard{
     
   }
     public static void main(String[] arg){
-	    QueenBoard q=new QueenBoard(8);
+      for(int i=1;i<10;i++){
+	    QueenBoard q=new QueenBoard(i);
 	    System.out.println(q.countSolutions());
 	    System.out.println(q);
+      }
     }
   
 
