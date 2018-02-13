@@ -101,28 +101,24 @@ public class QueenBoard{
      *@throws IllegalStateException when the board starts with any non-zero value
      */
     public int countSolutions(){
-      return counter(0,0,0);
+      return counter(0,0);
     }
-  public int counter(int r, int c,int sum){
-      
-    if(countQueens==board.length){
-      return sum+=1;
+  public int counter(int r, int c){ 
+    int sum=0;
+    if(c>=board.length){
+      return 1;
     }
     for(int i=0;i<board.length;i++){
       if(addQueen(i,c)){
-	int x=counter(0,c+1,sum);
-	System.out.println(x);
-        if(x==sum+1){
-	    sum+=x;
-	}
+        sum+=counter(0,c+1);
         removeQueen(i,c);
         }
       }
-    return sum;
+      return sum;
     
   }
     public static void main(String[] arg){
-	    QueenBoard q=new QueenBoard(4);
+	    QueenBoard q=new QueenBoard(8);
 	    System.out.println(q.countSolutions());
 	    System.out.println(q);
     }
