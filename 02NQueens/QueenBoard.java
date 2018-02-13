@@ -124,13 +124,6 @@ public class QueenBoard{
       return sum;
     
   }
-    public static void main(String[] arg){
-      for(int i=1;i<10;i++){
-	    QueenBoard q=new QueenBoard(i);
-	    System.out.println(q.countSolutions());
-	    System.out.println(q);
-      }
-    }
   
 
 }
