@@ -1,16 +1,30 @@
 public class KnightBoard{
-    int[][] board
+    int[][] board;
     public KnightBoard(int startingRows,int startingCols){
-	board=new int[startingRows,startingCols];
+	board=new int[startingRows][startingCols];
     }
-    //non square is required!
 
     public String toString(){
-	return "";
+      String Board="";
+      for(int i=0;i<board.length;i++){
+        for(int j=0;j<board[i].length;j++){
+          if(board[i][j]<10){
+            Board+=" "+board[i][j]+" ";
+          }
+          else{
+            Board+=board[i][j]+" ";
+          }
+        }
+        Board+="\n";
+      }
+      return Board;
+    
     }
 
     public boolean solve(){
-	return false;
+	int midR=board.length/2;
+	int midC=board[0].length/2;
+	return solver(midR,midC,1);
     }
     public int countSolutions(){
 	return 0;
