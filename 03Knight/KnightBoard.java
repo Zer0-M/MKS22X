@@ -15,7 +15,13 @@ public class KnightBoard{
     public int countSolutions(){
 	return 0;
     }
-    private boolean solveH(int row ,int col, int level){
+    private boolean solver(int row ,int col, int level){
 	return false;
+    }
+    public static void main(String[] args){
+	KnightBoard k= new KnightBoard(3,2);
+	System.out.println(k);
+	k.solve();
+	System.out.println(k);
     }
 }
