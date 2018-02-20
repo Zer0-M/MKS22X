@@ -1,6 +1,6 @@
 import java.util.*;
 public class KnightBoard{
-  private static int[][] board;
+  private int[][] board;
   public KnightBoard(int startingRows,int startingCols){
     board=new int[startingRows][startingCols];
   }
@@ -21,7 +21,7 @@ public class KnightBoard{
     return Board;
     
   }
-  private static int[][] possibleMoves(int r, int c){
+  private int[][] possibleMoves(int r, int c){
     int[][] sols=new int[8][2];
     int x=r;
     int y=c;
@@ -60,6 +60,9 @@ public class KnightBoard{
     or out of bounds.
   */
   public boolean solve(int startingRow, int startingCol){
+    if(startingRow<0&&startingCol<0&&startingRow>=board.length&&startingCol>=board[0].length){
+      throw new IllegalArgumentException();
+    }
     return solver(startingRow,startingCol,1);
   }
 
@@ -69,9 +72,15 @@ public class KnightBoard{
      or out of bounds.
   */
   public int countSolutions(int startingRow, int startingCol){
+    if(startingRow<0&&startingCol<0&&startingRow>=board.length&&startingCol>=board[0].length){
+      throw new IllegalArgumentException();
+    }
     return counter(startingRow,startingCol,1);
   }
   private boolean solver(int r ,int c, int level){
+    if(board[r][c]>0){
+      throw new IllegalStateException();
+    }
     if(level==board.length*board[0].length){
       board[r][c]=level;
 	    return true;
@@ -90,7 +99,10 @@ public class KnightBoard{
     return false;
   }
     private int counter(int r ,int c, int level){
-      int sum=0;
+     if(board[r][c]>0){
+      throw new IllegalStateException();
+    }
+    int sum=0;
     if(level>=board.length*board[0].length){
 	    return 1;
     }
@@ -102,12 +114,5 @@ public class KnightBoard{
       }
     }
     return sum;
-  }
-  public static void main(String[] args){
-    KnightBoard k= new KnightBoard(5,5);
-    System.out.println(k);
-    System.out.println(Arrays.deepToString(k.possibleMoves(0,0)));
-    System.out.println(k.solve(2,2));
-    System.out.println(k);
   }
 }
