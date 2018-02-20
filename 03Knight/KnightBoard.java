@@ -46,6 +46,10 @@ public class KnightBoard{
         sols[count][0]=r+incR;
         sols[count][1]=c+incC;
       }
+      else{
+        sols[count][0]=board.length;
+        sols[count][1]=board[0].length;
+      }
 	    count+=1;
     }
     return sols;
@@ -73,7 +77,7 @@ public class KnightBoard{
 	    return true;
     }
     for(int i=0;i<possibleMoves(r,c).length;i++){
-      if(possibleMoves(r,c)[i][0]!=0||possibleMoves(r,c)[i][1]!=0){
+      if(possibleMoves(r,c)[i][0]!=board.length||possibleMoves(r,c)[i][1]!=board[0].length){
         board[r][c]=level;
         if(solver(possibleMoves(r,c)[i][0],possibleMoves(r,c)[i][1],level+1)){
           return true;
@@ -91,7 +95,7 @@ public class KnightBoard{
 	    return 1;
     }
     for(int i=0;i<possibleMoves(r,c).length;i++){
-      if(possibleMoves(r,c)[i][0]!=0||possibleMoves(r,c)[i][1]!=0){
+      if(possibleMoves(r,c)[i][0]!=board.length||possibleMoves(r,c)[i][1]!=board[0].length){
         board[r][c]=level;
         sum+=counter(possibleMoves(r,c)[i][0],possibleMoves(r,c)[i][1],level+1);
         board[r][c]=0;
@@ -100,10 +104,10 @@ public class KnightBoard{
     return sum;
   }
   public static void main(String[] args){
-    KnightBoard k= new KnightBoard(6,6);
+    KnightBoard k= new KnightBoard(5,5);
     System.out.println(k);
     System.out.println(Arrays.deepToString(k.possibleMoves(0,0)));
-    System.out.println(k.countSolutions(0,0));
+    System.out.println(k.solve(2,2));
     System.out.println(k);
   }
 }
