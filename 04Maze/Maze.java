@@ -22,8 +22,50 @@ public class Maze{
 
     */
 
-    public Maze(String filename){
-        //COMPLETE CONSTRUCTOR
+    public Maze(String filename) {
+	try{
+	    File text = new File(filename);
+	    Scanner inf = new Scanner(text);
+	    String m="";
+	    int count=0;
+	    int n=0;
+	    if(inf.hasNextLine()){
+		String line = inf.nextLine();
+		n=line.length();
+		m+=line;
+	    }
+	    m+="\n";
+	    while(inf.hasNextLine()){
+		String line = inf.nextLine();
+		m+=line+"\n";
+		count+=1;
+		maze=new char[count][n];
+		int counter=0;
+		for(int i=0;i<count ;i++){
+		    for(int j=0;j<n&&counter<m.length();j++){
+			maze[i][j]=m.charAt(counter);
+			counter++;
+		    }
+         }
+        }
+	}catch(FileNotFoundException e){
+	    System.out.println("File not found");
+	    System.exit(0);
+	}
+       
+
+        
+
+    }
+    public String toString(){
+	String str="";
+	for(int i=0;i<maze.length;i++){
+	    for(int j=0;j<maze[0].length;j++){
+		str+=maze[i][j];
+	    }
+	    str+="\n";
+	}
+	return str;
     }
     
 
@@ -60,7 +102,7 @@ public class Maze{
 
     */
     public int solve(){
-
+	return 0;
             //find the location of the S. 
 
 
