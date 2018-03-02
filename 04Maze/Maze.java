@@ -5,6 +5,8 @@ public class Maze{
 
     private char[][]maze;
     private boolean animate;//false by default
+    private int[] start;
+    private int[] end;
 
     /*Constructor loads a maze text file, and sets animate to false by default.
 
@@ -22,48 +24,49 @@ public class Maze{
 
     */
 
-    public Maze(String filename) {
-	try{
-	    File text = new File(filename);
+    public Maze(String filename) throws FileNotFoundException {
+        animate=true;
+        start=new int[2];
+        end=new int[2]; 
+        File text = new File(filename);
 	    Scanner inf = new Scanner(text);
 	    String m="";
-	    int count=0;
+	    int count=1;
 	    int n=0;
 	    if(inf.hasNextLine()){
 		String line = inf.nextLine();
 		n=line.length();
 		m+=line;
 	    }
-	    m+="\n";
 	    while(inf.hasNextLine()){
-		String line = inf.nextLine();
-		m+=line+"\n";
-		count+=1;
-		maze=new char[count][n];
-		int counter=0;
+            String line = inf.nextLine();
+            m+=line;
+            count+=1;
+            maze=new char[count][n];
+            int counter=0;
 		for(int i=0;i<count ;i++){
 		    for(int j=0;j<n&&counter<m.length();j++){
-			maze[i][j]=m.charAt(counter);
+            maze[i][j]=m.charAt(counter);
+            if(maze[i][j]=='S'){
+                start[0]=i;
+                start[1]=j;
+            }
+            if(maze[i][j]=='E'){
+                end[0]=i;
+                end[1]=j;
+            }
 			counter++;
 		    }
          }
         }
-	}catch(FileNotFoundException e){
-	    System.out.println("File not found");
-	    System.exit(0);
-	}
-       
-
-        
-
     }
     public String toString(){
 	String str="";
 	for(int i=0;i<maze.length;i++){
 	    for(int j=0;j<maze[0].length;j++){
 		str+=maze[i][j];
-	    }
-	    str+="\n";
+        }
+        str+="\n";
 	}
 	return str;
     }
@@ -102,7 +105,7 @@ public class Maze{
 
     */
     public int solve(){
-	return 0;
+	return solve(start[0],start[1],1);
             //find the location of the S. 
 
 
@@ -133,21 +136,47 @@ public class Maze{
             Note: This is not required based on the algorithm, it is just nice visually to see.
         All visited spots that are part of the solution are changed to '@'
     */
-    private int solve(int row, int col){ //you can add more parameters since this is private
-
-
+    private int solve(int row, int col,int moves){ //you can add more parameters since this is private
         //automatic animation! You are welcome.
         if(animate){
 
             clearTerminal();
             System.out.println(this);
 
-            wait(20);
+            wait(200);
+        }
+        maze[row][col]='@';
+        if(row==end[0]&&col==end[1]){
+            return moves;
+        }
+        if(maze[row+1][col]!='#'&&maze[row+1][col]!='@'){
+            maze[row+1][col]='@';
+            solve(row+1,col,moves+1);
+            maze[row+1][col]=' ';
+        }
+        else if(maze[row-1][col]!='#'&&maze[row-1][col]!='@'){
+            maze[row-1][col]='@';
+            solve(row-1,col,moves+1);
+            maze[row-1][col]=' ';
+        }
+        else if(maze[row][col+1]!='#'&&maze[row][col+1]!='@'){
+            maze[row][col+1]='@';
+            solve(row,col+1,moves+1);
+            maze[row][col+1]=' ';
+        }
+        else if(maze[row][col-1]!='#'&&maze[row][col-1]!='@'){
+            maze[row][col-1]='@';
+            solve(row,col-1,moves+1);
+            maze[row][col-1]=' ';
+        }
+
+        if(moves==0){
+            return -1;
         }
 
         //COMPLETE SOLVE
 
-        return -1; //so it compiles
+        return moves; //so it compiles
     }
 
 
