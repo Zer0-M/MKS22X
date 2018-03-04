@@ -27,7 +27,9 @@ public class Maze{
   public Maze(String filename) throws FileNotFoundException {
     animate=true;
     start=new int[2];
-    end=new int[2]; 
+    end=new int[2];
+    int Scount=0;
+    int Ecount=0;
     File text = new File(filename);
     Scanner inf = new Scanner(text);
     String m="";
@@ -42,23 +44,33 @@ public class Maze{
       String line = inf.nextLine();
       m+=line;
       count+=1;
+    }
       maze=new char[count][n];
       int counter=0;
       for(int i=0;i<count ;i++){
-		    for(int j=0;j<n&&counter<m.length();j++){
+		    for(int j=0;j<n;j++){
           maze[i][j]=m.charAt(counter);
           if(maze[i][j]=='S'){
+            Scount++;
             start[0]=i;
             start[1]=j;
           }
           if(maze[i][j]=='E'){
+            Ecount++;
             end[0]=i;
             end[1]=j;
           }
           counter++;
 		    }
-      }
+      
     }
+    if(Ecount>1){
+      throw new IllegalStateException();
+    }
+    if(Scount>1){
+      throw new IllegalStateException();
+    }
+
   }
   public String toString(){
     String str="";
@@ -105,6 +117,7 @@ public class Maze{
 
   */
   public int solve(){
+
     return solve(start[0],start[1],1);
     //find the location of the S. 
 
@@ -143,7 +156,7 @@ public class Maze{
       clearTerminal();
       System.out.println(this);
 
-      wait(200);
+      wait(20);
     }
     maze[row][col]='@';
     if(row==end[0]&&col==end[1]){
@@ -155,7 +168,7 @@ public class Maze{
       if(n>0){
         return n;
       }
-      maze[row+1][col]=' ';
+      maze[row+1][col]='.';
     }
     if(maze[row-1][col]!='#'&&maze[row-1][col]!='@'){
       maze[row-1][col]='@';
@@ -163,7 +176,7 @@ public class Maze{
       if(n>0){
         return n;
       }
-      maze[row-1][col]=' ';
+      maze[row-1][col]='.';
     }
     if(maze[row][col+1]!='#'&&maze[row][col+1]!='@'){
       maze[row][col+1]='@';
@@ -171,7 +184,7 @@ public class Maze{
       if(n>0){
         return n;
       }
-      maze[row][col+1]=' ';
+      maze[row][col+1]='.';
     }
     if(maze[row][col-1]!='#'&&maze[row][col-1]!='@'){
       maze[row][col-1]='@';
@@ -179,7 +192,7 @@ public class Maze{
       if(n>0){
         return n;
       }
-      maze[row][col-1]=' ';
+      maze[row][col-1]='.';
     }
 
     //COMPLETE SOLVE
