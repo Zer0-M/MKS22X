@@ -105,7 +105,7 @@ public class Maze{
 
   */
   public int solve(){
-    return solve(start[0],start[1]);
+    return solve(start[0],start[1],1);
     //find the location of the S. 
 
 
@@ -136,9 +136,8 @@ public class Maze{
     Note: This is not required based on the algorithm, it is just nice visually to see.
     All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col){ //you can add more parameters since this is private
+  private int solve(int row, int col,int moves){ //you can add more parameters since this is private
     //automatic animation! You are welcome.
-    int moves=1;
     if(animate){
 
       clearTerminal();
@@ -152,33 +151,33 @@ public class Maze{
     }
     if(maze[row+1][col]!='#'&&maze[row+1][col]!='@'){
       maze[row+1][col]='@';
-      moves+=1;
-      if(solve(row+1,col)>0){
-        return moves;
+      int n=solve(row+1,col,moves+1);
+      if(n>0){
+        return n;
       }
       maze[row+1][col]=' ';
     }
     if(maze[row-1][col]!='#'&&maze[row-1][col]!='@'){
       maze[row-1][col]='@';
-      moves+=1;
-      if(solve(row-1,col)>0){
-        return moves;
+      int n=solve(row-1,col,moves+1);
+      if(n>0){
+        return n;
       }
       maze[row-1][col]=' ';
     }
     if(maze[row][col+1]!='#'&&maze[row][col+1]!='@'){
       maze[row][col+1]='@';
-      moves+=1;
-      if(solve(row,col+1)>0){
-        return moves;
+      int n=solve(row,col+1,moves+1);
+      if(n>0){
+        return n;
       }
       maze[row][col+1]=' ';
     }
     if(maze[row][col-1]!='#'&&maze[row][col-1]!='@'){
       maze[row][col-1]='@';
-      moves+=1;
-      if(solve(row,col-1)>0){
-        return moves;
+      int n=solve(row,col-1,moves+1);
+      if(n>0){
+        return n;
       }
       maze[row][col-1]=' ';
     }
