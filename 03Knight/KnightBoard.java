@@ -21,37 +21,44 @@ public class KnightBoard{
     return Board;
     
   }
-  private int[][] possibleMoves(int r, int c){
-    int[][] sols=new int[8][2];
-    int x=r;
-    int y=c;
-    int count=0;
+  private int[] possibleMoves(int r,int c,int i){
+    int[] sols=new int[2];
     int incR=2;
     int incC=1;
-    for(int i=0;i<8;i++){
-	    if(i==1||i==5){
-        incC=0-incC;
-	    }
-	    if(i==2||i==6){
-        incR=0-incR;
-	    }
-	    if(i==3||i==7){
-        incC=0-incC;
-	    }
-	    if(i==4){
-        incC=2;
-        incR=1;
-	    }
-      if(r+incR<board.length&&c+incC<board[0].length&&c+incC>=0&&r+incR>=0&&board[r+incR][c+incC]==0){
-        sols[count][0]=r+incR;
-        sols[count][1]=c+incC;
-      }
-      else{
-        sols[count][0]=board.length;
-        sols[count][1]=board[0].length;
-      }
-	    count+=1;
+    if(i==1){
+      incC=0-incC;
     }
+    if(i==2){
+      incR=0-incR;
+    }
+    if(i==3){
+      incC=0-incC;
+    }
+    if(i==4){
+      incC=2;
+      incR=1;
+    }
+    if(i==5){
+      incC=-2;
+      incR=-1;
+    }
+    if(i==6){
+      incC=-2;
+      incR=1;
+    }
+    if(i==7){
+      incC=2;
+      incR=-1;
+    }
+    if(r+incR<board.length&&c+incC<board[0].length&&c+incC>=0&&r+incR>=0&&board[r+incR][c+incC]==0){
+      sols[0]=r+incR;
+      sols[1]=c+incC;
+    }
+    else{
+      sols[0]=board.length;
+      sols[1]=board.length;
+    }
+    
     return sols;
   }
   /**
@@ -85,10 +92,10 @@ public class KnightBoard{
       board[r][c]=level;
 	    return true;
     }
-    for(int i=0;i<possibleMoves(r,c).length;i++){
-      if(possibleMoves(r,c)[i][0]!=board.length||possibleMoves(r,c)[i][1]!=board[0].length){
+    for(int i=0;i<8;i++){
+      if(possibleMoves(r,c,i)[0]!=board.length||possibleMoves(r,c,i)[1]!=board[0].length){
         board[r][c]=level;
-        if(solver(possibleMoves(r,c)[i][0],possibleMoves(r,c)[i][1],level+1)){
+        if(solver(possibleMoves(r,c,i)[0],possibleMoves(r,c,i)[1],level+1)){
           return true;
         }
         else{
@@ -106,13 +113,18 @@ public class KnightBoard{
     if(level>=board.length*board[0].length){
 	    return 1;
     }
-    for(int i=0;i<possibleMoves(r,c).length;i++){
-      if(possibleMoves(r,c)[i][0]!=board.length||possibleMoves(r,c)[i][1]!=board[0].length){
+    for(int i=0;i<8;i++){
+      if(possibleMoves(r,c,i)[0]!=board.length||possibleMoves(r,c,i)[1]!=board[0].length){
         board[r][c]=level;
-        sum+=counter(possibleMoves(r,c)[i][0],possibleMoves(r,c)[i][1],level+1);
+        sum+=counter(possibleMoves(r,c,i)[0],possibleMoves(r,c,i)[1],level+1);
         board[r][c]=0;
       }
     }
     return sum;
+  }
+  public static void main(String[] args){
+    KnightBoard k= new KnightBoard(7, 7);
+    System.out.println(k.solve(0,0));
+    System.out.println(k);
   }
 }
