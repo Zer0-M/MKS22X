@@ -2,8 +2,8 @@ import java.io.*;
 import java.util.Scanner;
 import java.util.*;
 public class USACO{
-    public static int[][] map;
-    public static int[][] instructions;
+    private static int[][] map;
+    private static int[][] instructions;
     public static int bronze(String filename){
         int R=0;
         int C=0;
@@ -47,18 +47,66 @@ public class USACO{
         return 0;    
     }
     private void stomp(int i){
-        int R_s=instructions[i][0];
-        int C_s=instructions[i][1];
+        int R_s=instructions[i][0]-1;
+        int C_s=instructions[i][1]-1;
         int D_s=instructions[i][2];
         stompH(i,R_s,C_s,D_s);
     }
     private void stompH(int i,int r, int c, int d){
-        int R_s=instructions[i][0];
-        int C_s=instructions[i][1];
+        int R_s=instructions[i][0]-1;
+        int C_s=instructions[i][1]-1;
         int D_s=instructions[i][2];
-        if((r>R_s+2&&c>C_s+2)||map[r][c]!=map[R_s][C_s]){
-            System.out.println(Arrays.deepToString(map));
-        }
+        if((r>R_s+2&&c>C_s+2)||map[r][c]!=map[R_s][C_s]){        
+	    if(map[r+1][c]>map[r][c]){
+		if(map[r+1][c]-map[r][c]<d){
+		    map[r+1][c]=map[r][c];
+		    stompH(i,r+1,c,d);
+		}
+	    }
+	    else{
+		if(map[r][c]-map[r+1][c]<d){
+		    map[r][c]=map[r+1][c];
+		    stompH(i,r,c-1,d);
+		}
+	    }
+	    if(map[r-1][c]>map[r][c]){
+		if(map[r-1][c]-map[r][c]<d){
+		    map[r-1][c]=map[r][c];
+		    stompH(i,r-1,c,d);
+		}
+	    }
+	    else{
+		if(map[r][c]-map[r-1][c]<d){
+		    map[r][c]=map[r-1][c];
+		    stompH(i,r,c-1,d);
+		}
+	    }
+	    if(map[r][c+1]>map[r][c]){
+		if(map[r][c+1]-map[r][c]<d){
+		    map[r][c+1]=map[r][c];
+		    stompH(i,r,c+1,d);
+		}
+	    }
+	    else{
+		if(map[r][c]-map[r][c+1]<d){
+		    map[r][c]=map[r][c+1];
+		    stompH(i,r,c-1,d);
+		}
+	    }
+	    if(map[r][c-1]>map[r][c]){
+		if(map[r][c-1]-map[r][c]<d){
+		    map[r][c-1]=map[r][c];
+		    stompH(i,r,c-1,d);
+		}
+	    }
+	    else{
+		if(map[r][c]-map[r][c-1]<d){
+		    map[r][c]=map[r][c-1];
+		    stompH(i,r,c-1,d);
+		}
+	    }
+	}
+	
     }
     public static int silver(String filename){
 	return 0;
