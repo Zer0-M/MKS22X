@@ -25,7 +25,6 @@ public class Maze{
   */
 
   public Maze(String filename) throws FileNotFoundException {
-    animate=true;
     start=new int[2];
     end=new int[2];
     int Scount=0;
