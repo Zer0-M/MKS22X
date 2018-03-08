@@ -157,9 +157,10 @@ public class Maze{
 
       wait(20);
     }
-    maze[row][col]='@';
+    
     if(row==end[0]&&col==end[1]){
-      return moves;
+	maze[row][col]='E';
+      return moves-1;
     }
     if(maze[row+1][col]!='#'&&maze[row+1][col]!='@'){
       maze[row+1][col]='@';
