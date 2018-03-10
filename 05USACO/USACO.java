@@ -44,6 +44,7 @@ public class USACO{
         for(int i=0;i<instructions.length;i++){
             stomp(i);
         }
+        fill(E);
         System.out.println(R + " "+C +" "+ E+" "+N+" "+Arrays.deepToString(map)+" "+Arrays.deepToString(instructions));
         }
         catch(FileNotFoundException e){
@@ -70,26 +71,25 @@ public class USACO{
         int R_s=instructions[i][0]-1;
         int C_s=instructions[i][1]-1;
         int D_s=instructions[i][2];
+        for(int ind=R_s;ind<R_s+3&&ind<map.length;ind++){
+            for(int j=C_s;j<C_s+3&&j<map[i].length;j++){
+                if(map[ind][j]-(peak-D_s)<=D_s&&map[ind][j]-(peak-D_s)>=0){
+                    map[ind][j]=peak-D_s;
+                }
+            }
+        }
         
-        System.out.println((map[r][c+1]-(peak-D_s))+" "+Arrays.deepToString(map));
-        if(r<map.length&&Math.abs(map[r+1][c]-(peak-D_s))<=D_s){
-            map[r+1][c]=peak-D_s;
-            stompH(i,r+1,c,peak);
-        }
-        if(c-1>=0&&Math.abs(map[r][c-1]-peak-D_s)<=D_s){
-            int old=map[r][c-1];
-            map[r][c-1]=peak-D_s;
-            stompH(i,r,c-1,peak);
-        }
-        if(r-1>=0&&Math.abs(map[r-1][c]-peak-D_s)<=D_s){
-            int old=map[r-1][c];
-            map[r-1][c]=peak-D_s;
-            stompH(i,r-1,c,peak);
-        }
-        if(c<map[0].length&&Math.abs(map[r][c+1]-peak-D_s)<=D_s){
-            int old=map[r][c+1];
-            map[r][c+1]=peak-D_s;
-            stompH(i,r,c+1,peak);
+    }
+    private static void fill(int E){
+        for(int i=0;i<map.length;i++){
+            for(int j=0;j<map[i].length;j++){
+                if(E-map[i][j]>0){
+                    map[i][j]=E-map[i][j];
+                }
+                else{
+                    map[i][j]=0;
+                }
+            }
         }
     }
     public static int silver(String filename){
