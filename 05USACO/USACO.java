@@ -4,7 +4,10 @@ import java.util.*;
 public class USACO{
     private static int[][] map;
     private static int[][] instructions;
+    private static boolean stompMap;
+
     public static int bronze(String filename){
+        stompMap=true;
         int R=0;
         int C=0;
         int E=0;
@@ -38,6 +41,9 @@ public class USACO{
                 }
             }
         }
+        for(int i=0;i<instructions.length;i++){
+            stomp(i);
+        }
         System.out.println(R + " "+C +" "+ E+" "+N+" "+Arrays.deepToString(map)+" "+Arrays.deepToString(instructions));
         }
         catch(FileNotFoundException e){
@@ -46,67 +52,45 @@ public class USACO{
         }
         return 0;    
     }
-    private void stomp(int i){
+    private static void stomp(int i){
         int R_s=instructions[i][0]-1;
         int C_s=instructions[i][1]-1;
-        int D_s=instructions[i][2];
-        stompH(i,R_s,C_s,D_s);
+        int peak=map[R_s][C_s]; //since the cows wait for cows at higher level are on the same level
+        for(int ind=R_s;ind<R_s+3&&ind<map.length;ind++){
+            for(int j=C_s;j<C_s+3&&j<map[i].length;j++){
+                if(map[ind][j]>peak){
+                    peak=map[ind][j];
+                }
+            }
+        }
+        System.out.println(R_s+" "+C_s);
+        stompH(i,R_s,C_s,peak);
     }
-    private void stompH(int i,int r, int c, int d){
+    private static void stompH(int i,int r, int c,int peak){
         int R_s=instructions[i][0]-1;
         int C_s=instructions[i][1]-1;
         int D_s=instructions[i][2];
-        if((r>R_s+2&&c>C_s+2)||map[r][c]!=map[R_s][C_s]){        
-	    if(map[r+1][c]>map[r][c]){
-		if(map[r+1][c]-map[r][c]<d){
-		    map[r+1][c]=map[r][c];
-		    stompH(i,r+1,c,d);
-		}
-	    }
-	    else{
-		if(map[r][c]-map[r+1][c]<d){
-		    map[r][c]=map[r+1][c];
-		    stompH(i,r,c-1,d);
-		}
-	    }
-	    if(map[r-1][c]>map[r][c]){
-		if(map[r-1][c]-map[r][c]<d){
-		    map[r-1][c]=map[r][c];
-		    stompH(i,r-1,c,d);
-		}
-	    }
-	    else{
-		if(map[r][c]-map[r-1][c]<d){
-		    map[r][c]=map[r-1][c];
-		    stompH(i,r,c-1,d);
-		}
-	    }
-	    if(map[r][c+1]>map[r][c]){
-		if(map[r][c+1]-map[r][c]<d){
-		    map[r][c+1]=map[r][c];
-		    stompH(i,r,c+1,d);
-		}
-	    }
-	    else{
-		if(map[r][c]-map[r][c+1]<d){
-		    map[r][c]=map[r][c+1];
-		    stompH(i,r,c-1,d);
-		}
-	    }
-	    if(map[r][c-1]>map[r][c]){
-		if(map[r][c-1]-map[r][c]<d){
-		    map[r][c-1]=map[r][c];
-		    stompH(i,r,c-1,d);
-		}
-	    }
-	    else{
-		if(map[r][c]-map[r][c-1]<d){
-		    map[r][c]=map[r][c-1];
-		    stompH(i,r,c-1,d);
-		}
-	    }
-	}
-	
+        
+        System.out.println((map[r][c+1]-(peak-D_s))+" "+Arrays.deepToString(map));
+        if(r<map.length&&Math.abs(map[r+1][c]-(peak-D_s))<=D_s){
+            map[r+1][c]=peak-D_s;
+            stompH(i,r+1,c,peak);
+        }
+        if(c-1>=0&&Math.abs(map[r][c-1]-peak-D_s)<=D_s){
+            int old=map[r][c-1];
+            map[r][c-1]=peak-D_s;
+            stompH(i,r,c-1,peak);
+        }
+        if(r-1>=0&&Math.abs(map[r-1][c]-peak-D_s)<=D_s){
+            int old=map[r-1][c];
+            map[r-1][c]=peak-D_s;
+            stompH(i,r-1,c,peak);
+        }
+        if(c<map[0].length&&Math.abs(map[r][c+1]-peak-D_s)<=D_s){
+            int old=map[r][c+1];
+            map[r][c+1]=peak-D_s;
+            stompH(i,r,c+1,peak);
+        }
     }
     public static int silver(String filename){
 	return 0;
