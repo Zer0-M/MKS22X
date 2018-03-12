@@ -4,7 +4,10 @@ import java.util.*;
 public class USACO{
     private static int[][] map;
     private static int[][] instructions;
-
+    private static char[][] mapS;
+    private static int[][] prev;
+    private static int[][] next;
+    private static int T;
     public static int bronze(String filename){
         int R=0;
         int C=0;
@@ -98,14 +101,133 @@ public class USACO{
         }
     }
     public static int silver(String filename){
-	return 0;
+        int N=0;
+        int M=0;
+        T=0;
+        int R1=0;
+        int C1=0;
+        int R2=0;
+        int C2=0;
+        String m="";
+        try{
+        File text = new File(filename);
+        Scanner inf = new Scanner(text);
+        for(int i=0;inf.hasNext();i++){
+            if(i==0){
+                N=inf.nextInt();
+            }
+            if(i==1){
+                M=inf.nextInt();
+                mapS=new char[N][M];
+                prev=new int[N][M];
+                next=new int[N][M];
+                
+            }
+            if(i==2){
+                T=inf.nextInt();
+            }
+            if(i==3){
+                int counter=0;
+                if(inf.hasNextLine()){
+                    String dispose=inf.nextLine();
+                }
+                while(inf.hasNext()&&counter<N){
+                String line = inf.next();
+                m+=line;
+                counter++;
+                }
+            }
+            int count=0;
+            for(int ind=0;i==3&&ind<N;ind++){
+                for(int j=0;j<M;j++){
+                    char c=m.charAt(count);
+                    mapS[ind][j]=c;
+                    count++;
+                }
+            }
+            if(i==4){
+                R1=inf.nextInt()-1;
+            }
+            if(i==5){
+                C1=inf.nextInt()-1;
+            }
+            if(i==6){
+                R2=inf.nextInt()-1;
+            }
+            if(i==7){
+                C2=inf.nextInt()-1;
+            }
+
+        }
+        prev[R2][C2]=1;
+        moves(R1, C1,0);
+        return next[R1][C1];
+    }catch(FileNotFoundException e){
+            System.out.println("please provide vaild file");
+            System.exit(0);
+        }
+        return 0;
     }
+    public static String stringify(int[][] arr){
+        String Map="";
+        for(int i=0;i<arr.length;i++){
+        for(int j=0;j<arr[i].length;j++){
+            if(arr[i][j]<10){
+            Map+=" "+arr[i][j]+" ";
+            }
+            else{
+            Map+=arr[i][j]+" ";
+            }
+        }
+        Map+="\n";
+        }
+        return Map;
+    }
+    public static void moves(int targetR,int targetC, int moves){
+        if(moves!=T){
+            for(int i=0;i<next.length;i++){
+                for(int j=0;j<next[i].length;j++){
+                    if(prev[i][j]>0){
+                        if(i+1<next.length&&mapS[i+1][j]!='*'){
+                            next[i+1][j]+=prev[i][j];
+                        }
+                        if(i-1>=0&&mapS[i-1][j]!='*'){
+                            next[i-1][j]+=prev[i][j];
+                        }
+                        if(j+1<next[i].length&&mapS[i][j+1]!='*'){
+                            next[i][j+1]+=prev[i][j];
+                        }
+                        if(j-1>=0&&mapS[i][j-1]!='*'){
+                            next[i][j-1]+=prev[i][j];
+                        }
+                        next[i][j]=0;
+                    }
+                }
+            }
+            for(int i=0;i<prev.length;i++){
+                for(int j=0;j<prev[i].length;j++){
+                    prev[i][j]=next[i][j];
+                }
+            }
+            moves(targetR,targetC,moves+1);
+        }
+    }
+
     public static void main(String[] args){
         for(int i=1;i<11;i++){
         int sol=USACO.bronze("makelake."+i+".in");
-        int [] sols={342144,102762432,1058992704,753121152,1028282688,72207936,265508928,776609856,2098830528,211201344};
-        System.out.println(sol==sols[i-1]);
+        int solS=USACO.silver("ctravel."+i+".in");
+        int [] solsB={342144,102762432,1058992704,753121152,1028282688,72207936,265508928,776609856,2098830528,211201344};
+        int[] solsS={1,74,6435,339246,0,14396412,1533810,456055,28,1321670};
+        if(sol!=solsB[i-1]){
+            System.out.println(USACO.bronze("makelake."+i+".in"));
         }
+        if(solS!=solsS[i-1]){
+            System.out.println(USACO.silver("ctravel."+i+".in"));
+        }
+        }
+        
+
     }
 
 }
