@@ -21,7 +21,7 @@ public class Quickselect{
 
         
         while(start<end){
-            if(data[start]>pivot){
+            if(data[start]>=pivot){
                 int temp=data[end];
                 data[end]=data[start];
                 end--;
@@ -41,7 +41,7 @@ public class Quickselect{
         return pivotI;
     }
     public static void main(String[] args){
-        int arr[]={17, 61, 67, 47, 93,12, 20,	4, 44,	68};
+        int[] arr={999,999,999,4,1,0,3,2,999,999,999};
         System.out.println(Quickselect.partition(arr,0,arr.length-1));
     }
 }
