@@ -17,30 +17,31 @@ public class Quickselect{
         data[start]=pivot;
         start++;
         data[pivotI]=tem;
+        pivotI=0;
 
         
-        for(int i=start;i<end;i++){
-            System.out.println(i+" " +start+" "+end+" "+Arrays.toString(data));
-            if(data[i]>pivot){
+        while(start<end){
+            if(data[start]>pivot){
                 int temp=data[end];
-                data[end]=data[i];
+                data[end]=data[start];
                 end--;
-                data[i]=temp;
-                System.out.println(i+" " +start+" "+end+" "+Arrays.toString(data));
+                data[start]=temp;
             }
-            else if(data[i]<pivot){
-                int temp=data[start];
-                data[start]=data[i];
+            else if(data[start]<pivot){
                 start++;
-                data[i]=temp;
-                System.out.println(i+" " +start+" "+end+" "+Arrays.toString(data));
             }
         }
-        System.out.println(Arrays.toString(data));
-        return pivot;
+        for(int i=0;i<data.length-1&&data[i+1]<data[i];i++){
+                int temp=data[i+1];
+                data[i+1]=data[i];
+                data[i]=temp;
+                pivotI=i+1;
+                
+        }
+        return pivotI;
     }
     public static void main(String[] args){
-        int arr[]={17, 61, 67,5,6};
+        int arr[]={17, 61, 67, 47, 93,12, 20,	4, 44,	68};
         System.out.println(Quickselect.partition(arr,0,arr.length-1));
     }
 }
