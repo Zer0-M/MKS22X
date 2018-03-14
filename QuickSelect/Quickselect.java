@@ -10,28 +10,30 @@ public class Quickselect{
     */
     static int partition ( int [] data, int start, int end){
         Random rand=new Random();
-        int pivotI=rand.nextInt(data.length);
+        int pivotI=3;//start+rand.nextInt(end-start);
         int pivot=data[pivotI];
-    
-        int tem=data[start];
-        data[start]=pivot;
-        start++;
+        int small=start;
+        int large=end;
+        int tem=data[small];
+        data[small]=pivot;
         data[pivotI]=tem;
-        pivotI=0;
+        pivotI=small;
+        small++;
+
 
         
-        while(start<end){
-            if(data[start]>=pivot){
-                int temp=data[end];
-                data[end]=data[start];
-                end--;
-                data[start]=temp;
+        while(small<large){
+            if(data[small]>=pivot){
+                int temp=data[large];
+                data[large]=data[small];
+                large--;
+                data[small]=temp;
             }
-            else if(data[start]<pivot){
-                start++;
+            else if(data[small]<pivot){
+                small++;
             }
         }
-        for(int i=0;i<data.length-1&&data[i+1]<data[i];i++){
+        for(int i=start;i<end&&data[i+1]<data[i];i++){
                 int temp=data[i+1];
                 data[i+1]=data[i];
                 data[i]=temp;
@@ -40,8 +42,27 @@ public class Quickselect{
         }
         return pivotI;
     }
+    public static int quickSelect(int[] data, int k){
+        int start=0;
+        int end=data.length-1;
+        int part=partition(data,start,end);
+        while(part!=k){ 
+            if(part>k){
+                end=part;
+            }
+            else{
+                start=part;
+            }
+            
+            part=partition(data,start,end);
+        }
+        
+        return data[part];
+    }
     public static void main(String[] args){
-        int[] arr={999,999,999,4,1,0,3,2,999,999,999};
-        System.out.println(Quickselect.partition(arr,0,arr.length-1));
+        int[] arr={0,2,5,2};
+        //for(int i=0;i<arr.length;i++){
+        System.out.println(Quickselect.quickSelect(arr,2));
+        //}
     }
 }
