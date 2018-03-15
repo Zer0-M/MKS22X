@@ -52,6 +52,16 @@ public class Quick{
         }
         return data[k];
     }
+    public static void quicksort(int[] data){
+        sortHelper(data,0,data.length-1);
+    }
+    private static void sortHelper(int[] data,int start, int end){
+        if(start<end){
+            int part=partition(data,start,end);
+            sortHelper(data,start,part-1);
+            sortHelper(data,part+1,end);
+        }
+    }
     public static void main(String[] args){
         Random rand=new Random();
         int length= rand.nextInt(20);
@@ -60,8 +70,9 @@ public class Quick{
             arr[i]=rand.nextInt(500);
         }
         System.out.println(Arrays.toString(arr));
-        for(int i=0;i<arr.length;i++){
-        System.out.println(Quickselect.quickSelect(arr,i));
-        }
+        //for(int i=0;i<arr.length;i++){
+        Quick.quicksort(arr);
+        //}
+        System.out.println(Arrays.toString(arr));
     }
 }
