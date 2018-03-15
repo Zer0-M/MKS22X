@@ -16,13 +16,11 @@ public class Quick{
     */
     static int partition ( int [] data, int start, int end){
         Random rand=new Random();
-        //System.out.println(start+" "+end+" "+Arrays.toString(data));
         int pivotI=start+rand.nextInt(end-start);
         int small=start+1;
         int large=end;
         swap(data,pivotI,start);
         while(small<=large){
-            //System.out.println(Arrays.toString(data));
             if(data[small]>=data[start]){
                 swap(data,large,small);
                 large--;
@@ -33,10 +31,33 @@ public class Quick{
         }
         swap(data,start,large);
         
-        //System.out.println(Arrays.toString(data));
         return large;
     }
-    public static int quickSelect(int[] data, int k){
+    static void partitionD ( int [] data, int start, int end){
+        Random rand=new Random();
+        int pivotI=start+rand.nextInt(end-start);
+        int lt=start+1;
+        int gt=end;
+	int i=lt;
+        swap(data,pivotI,start);
+        while(i<=gt){
+            if(data[i]==data[start]){
+                i++;
+            }
+            if(data[i]>data[start]){
+		swap(data,i,gt);
+		gt--;
+	    }
+	    if(data[i]<data[start]){
+		swap(data,i,lt);
+                lt++;
+		i++;
+            }
+        }
+        swap(data,i,gt);
+        
+    }
+    public static int quickselect(int[] data, int k){
         int start=0;
         int end=data.length-1;
         int part=partition(data,start,end);
@@ -64,14 +85,14 @@ public class Quick{
     }
     public static void main(String[] args){
         Random rand=new Random();
-        int length= rand.nextInt(20);
+        int length= rand.nextInt(50);
         int[] arr=new int[length];
         for(int i=0;i<length;i++){
-            arr[i]=rand.nextInt(500);
+            arr[i]=rand.nextInt(3);
         }
         System.out.println(Arrays.toString(arr));
         //for(int i=0;i<arr.length;i++){
-        Quick.quicksort(arr);
+        Quick.partitionD(arr,0,arr.length-1);
         //}
         System.out.println(Arrays.toString(arr));
     }
