@@ -1,5 +1,11 @@
 import java.util.*;
+
 public class Quickselect{
+    public static void swap(int[]data, int a, int b){
+        int tem=data[a];
+        data[a]=data[b];
+        data[b]=tem;
+    }
     /*Choose a random pivot element, and modify the array such that:
     *1. Only the indices from start to end inclusive are considered in range
     *2. A random index from start to end inclusive is chosen, the corresponding 
@@ -10,59 +16,52 @@ public class Quickselect{
     */
     static int partition ( int [] data, int start, int end){
         Random rand=new Random();
-        int pivotI=3;//start+rand.nextInt(end-start);
-        int pivot=data[pivotI];
-        int small=start;
+        //System.out.println(start+" "+end+" "+Arrays.toString(data));
+        int pivotI=start+rand.nextInt(end-start);
+        int small=start+1;
         int large=end;
-        int tem=data[small];
-        data[small]=pivot;
-        data[pivotI]=tem;
-        pivotI=small;
-        small++;
-
-
-        
-        while(small<large){
-            if(data[small]>=pivot){
-                int temp=data[large];
-                data[large]=data[small];
+        swap(data,pivotI,start);
+        while(small<=large){
+            //System.out.println(Arrays.toString(data));
+            if(data[small]>=data[start]){
+                swap(data,large,small);
                 large--;
-                data[small]=temp;
             }
-            else if(data[small]<pivot){
+            else {
                 small++;
             }
         }
-        for(int i=start;i<end&&data[i+1]<data[i];i++){
-                int temp=data[i+1];
-                data[i+1]=data[i];
-                data[i]=temp;
-                pivotI=i+1;
-                
-        }
-        return pivotI;
+        swap(data,start,large);
+        
+        //System.out.println(Arrays.toString(data));
+        return large;
     }
     public static int quickSelect(int[] data, int k){
         int start=0;
         int end=data.length-1;
         int part=partition(data,start,end);
-        while(part!=k){ 
+        while(part!=k&&end>start){ 
+            part=partition(data,start,end);
+            
             if(part>k){
-                end=part;
+                end=part-1;
             }
             else{
-                start=part;
+                start=part+1;
             }
-            
-            part=partition(data,start,end);
         }
-        
-        return data[part];
+        return data[k];
     }
     public static void main(String[] args){
-        int[] arr={0,2,5,2};
-        //for(int i=0;i<arr.length;i++){
-        System.out.println(Quickselect.quickSelect(arr,2));
-        //}
+        Random rand=new Random();
+        int length= rand.nextInt(20);
+        int[] arr=new int[length];
+        for(int i=0;i<length;i++){
+            arr[i]=rand.nextInt(500);
+        }
+        System.out.println(Arrays.toString(arr));
+        for(int i=0;i<arr.length;i++){
+        System.out.println(Quickselect.quickSelect(arr,i));
+        }
     }
 }
