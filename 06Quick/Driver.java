@@ -1,7 +1,7 @@
 import java.util.*;
 public class Driver{
     public static void main(String[] args){
-        for(int j=0;j<10000;j++){
+        for(int j=0;j<1;j++){
             Random rand=new Random();
             int length= rand.nextInt(1000);
             int[] arr=new int[length];
@@ -30,7 +30,7 @@ public class Driver{
              for(int i=0;i<ar.length;i++){
                  int k=Quick.quickselect(ar, i);
                  if(ary[i]!=k){
-                     System.out.println("Test failed");
+                     System.out.println("quickselect Test failed");
                  }
              }
         }
