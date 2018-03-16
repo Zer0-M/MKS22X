@@ -14,7 +14,7 @@ public class Quick{
     *4. all elements in range that are larger than the pivot element are placed after the pivot element.
     *@return the index of the final position of the pivot element.
     */
-    static int partition ( int [] data, int start, int end){
+    static int partition0 ( int [] data, int start, int end){
         Random rand=new Random();
         int pivotI=start+rand.nextInt(end-start);
         int small=start+1;
@@ -33,8 +33,7 @@ public class Quick{
         
         return large;
     }
-    static void partitionD ( int [] data, int start, int end){
-        if(start<end){
+    static int[] partition ( int [] data, int start, int end){
         Random rand=new Random();
         int pivotI=start+rand.nextInt(end-start);
         int pivot=data[pivotI];
@@ -55,17 +54,18 @@ public class Quick{
                 i++;
             }
         }
-        partitionD(data,start,lt-1);
-        partitionD(data,i,end);
-    }
+        int[] part=new int[2];
+        part[0]=lt-1;
+        part[1]=i;
+        return part;
 
     }
     public static int quickselect(int[] data, int k){
         int start=0;
         int end=data.length-1;
-        int part=partition(data,start,end);
+        int part=partition0(data,start,end);
         while(part!=k&&end>start){ 
-            part=partition(data,start,end);
+            part=partition0(data,start,end);
             
             if(part>k){
                 end=part-1;
@@ -77,13 +77,13 @@ public class Quick{
         return data[k];
     }
     public static void quicksort(int[] data){
-        sortHelper(data,0,data.length-1);
+        sortHelper(data, 0,data.length-1 );
     }
     private static void sortHelper(int[] data,int start, int end){
         if(start<end){
-            int part=partition(data,start,end);
-            sortHelper(data,start,part-1);
-            sortHelper(data,part+1,end);
+            int[] part=partition(data,start,end);
+            sortHelper(data,start,part[0]);
+            sortHelper(data,part[1],end);
         }
     }
     public static void main(String[] args){
@@ -93,12 +93,20 @@ public class Quick{
             int[] arr=new int[length];
             int[] ary=new int[length];
             for(int i=0;i<length;i++){
-                int r=rand.nextInt(500);
+                int r=rand.nextInt(100);
                 arr[i]=r;
                 ary[i]=r;
             }
-            Quick.partitionD(arr,0,arr.length-1);
+            // long startTime = System.nanoTime();
+            Quick.quicksort(arr);
+            // long stopTime = System.nanoTime();
+            // long elapsedTime = stopTime - startTime;
+            //System.out.println("Dutch Flag: "+elapsedTime);
+            // startTime=System.nanoTime();
             Arrays.sort(ary);
+            // stopTime = System.nanoTime();
+            // long elapsedTimeB = stopTime - startTime;
+            //System.out.println("Built in: "+elapsedTimeB);
             if(!Arrays.equals(arr,ary)){
                  System.out.println("Test failed");
                 System.out.println(Arrays.toString(arr));
