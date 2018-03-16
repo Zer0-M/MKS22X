@@ -16,10 +16,13 @@ public class Quick{
     */
     static int partition0 ( int [] data, int start, int end){
         Random rand=new Random();
+        if(start==end){
+            return data[start];
+        }
         int pivotI=start+rand.nextInt(end-start);
+        swap(data,pivotI,start);
         int small=start+1;
         int large=end;
-        swap(data,pivotI,start);
         while(small<=large){
             if(data[small]>=data[start]){
                 swap(data,large,small);
@@ -66,7 +69,6 @@ public class Quick{
         int part=partition0(data,start,end);
         while(part!=k&&end>start){ 
             part=partition0(data,start,end);
-            
             if(part>k){
                 end=part-1;
             }
@@ -87,15 +89,17 @@ public class Quick{
         }
     }
     public static void main(String[] args){
-        for(int j=0;j<100;j++){
+        for(int j=0;j<10000;j++){
             Random rand=new Random();
-            int length= rand.nextInt(100);
+            int length= rand.nextInt(1000);
             int[] arr=new int[length];
             int[] ary=new int[length];
+            int[] ar=new int[length];
             for(int i=0;i<length;i++){
-                int r=rand.nextInt(100);
+                int r=rand.nextInt(rand.nextInt(100)+1);
                 arr[i]=r;
                 ary[i]=r;
+                ar[i]=r;
             }
             // long startTime = System.nanoTime();
             Quick.quicksort(arr);
@@ -111,7 +115,14 @@ public class Quick{
                  System.out.println("Test failed");
                 System.out.println(Arrays.toString(arr));
              }
+             for(int i=0;i<ar.length;i++){
+                 int k=quickselect(ar, i);
+                 if(ary[i]!=k){
+                     System.out.println("Test failed");
+                 }
+             }
         }
+
     }
     
 }
