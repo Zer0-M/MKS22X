@@ -16,9 +16,12 @@ public class Quick{
     */
     static int partition0 ( int [] data, int start, int end){
         Random rand=new Random();
+<<<<<<< HEAD
         if(start==end){
             return data[start];
         }
+=======
+>>>>>>> d801669a287067b0c0d0756501b9e4ffe525a270
         int pivotI=start+rand.nextInt(end-start);
         swap(data,pivotI,start);
         int small=start+1;
@@ -36,6 +39,7 @@ public class Quick{
         
         return large;
     }
+<<<<<<< HEAD
     static int[] partition ( int [] data, int start, int end){
         Random rand=new Random();
         int pivotI=start+rand.nextInt(end-start);
@@ -62,6 +66,31 @@ public class Quick{
         part[1]=i;
         return part;
 
+=======
+    static void partitionD ( int [] data, int start, int end){
+        Random rand=new Random();
+        int pivotI=start+rand.nextInt(end-start);
+        int lt=start+1;
+        int gt=end;
+	int i=lt;
+        swap(data,pivotI,start);
+        while(i<=gt){
+            if(data[i]==data[start]){
+                i++;
+            }
+            if(data[i]>data[start]){
+		swap(data,i,gt);
+		gt--;
+	    }
+	    if(data[i]<data[start]){
+		swap(data,i,lt);
+                lt++;
+		i++;
+            }
+        }
+        swap(data,i,gt);
+        
+>>>>>>> d801669a287067b0c0d0756501b9e4ffe525a270
     }
     public static int quickselect(int[] data, int k){
         int start=0;
@@ -88,6 +117,22 @@ public class Quick{
             sortHelper(data,part[1],end);
         }
     }
+<<<<<<< HEAD
 
     
+=======
+    public static void main(String[] args){
+        Random rand=new Random();
+        int length= rand.nextInt(50);
+        int[] arr=new int[length];
+        for(int i=0;i<length;i++){
+            arr[i]=rand.nextInt(3);
+        }
+        System.out.println(Arrays.toString(arr));
+        //for(int i=0;i<arr.length;i++){
+        Quick.partitionD(arr,0,arr.length-1);
+        //}
+        System.out.println(Arrays.toString(arr));
+    }
+>>>>>>> d801669a287067b0c0d0756501b9e4ffe525a270
 }
