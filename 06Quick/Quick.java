@@ -16,13 +16,11 @@ public class Quick{
     */
     static int partition ( int [] data, int start, int end){
         Random rand=new Random();
-        //System.out.println(start+" "+end+" "+Arrays.toString(data));
         int pivotI=start+rand.nextInt(end-start);
         int small=start+1;
         int large=end;
         swap(data,pivotI,start);
         while(small<=large){
-            //System.out.println(Arrays.toString(data));
             if(data[small]>=data[start]){
                 swap(data,large,small);
                 large--;
@@ -33,10 +31,36 @@ public class Quick{
         }
         swap(data,start,large);
         
-        //System.out.println(Arrays.toString(data));
         return large;
     }
-    public static int quickSelect(int[] data, int k){
+    static void partitionD ( int [] data, int start, int end){
+        if(start<end){
+        Random rand=new Random();
+        int pivotI=start+rand.nextInt(end-start);
+        int pivot=data[pivotI];
+        int lt=start;
+        int gt=end;
+        int i=start;
+        while(i<=gt){
+            if(data[i]==pivot){
+                i++;
+            }
+            else if(data[i]>pivot){
+                swap(data,i,gt);
+                gt--;
+            }
+            else if(data[i]<pivot){
+                swap(data,i,lt);
+                lt++;
+                i++;
+            }
+        }
+        partitionD(data,start,lt-1);
+        partitionD(data,i,end);
+    }
+
+    }
+    public static int quickselect(int[] data, int k){
         int start=0;
         int end=data.length-1;
         int part=partition(data,start,end);
@@ -63,16 +87,23 @@ public class Quick{
         }
     }
     public static void main(String[] args){
-        Random rand=new Random();
-        int length= rand.nextInt(20);
-        int[] arr=new int[length];
-        for(int i=0;i<length;i++){
-            arr[i]=rand.nextInt(500);
+        for(int j=0;j<100;j++){
+            Random rand=new Random();
+            int length= rand.nextInt(100);
+            int[] arr=new int[length];
+            int[] ary=new int[length];
+            for(int i=0;i<length;i++){
+                int r=rand.nextInt(500);
+                arr[i]=r;
+                ary[i]=r;
+            }
+            Quick.partitionD(arr,0,arr.length-1);
+            Arrays.sort(ary);
+            if(!Arrays.equals(arr,ary)){
+                 System.out.println("Test failed");
+                System.out.println(Arrays.toString(arr));
+             }
         }
-        System.out.println(Arrays.toString(arr));
-        //for(int i=0;i<arr.length;i++){
-        Quick.quicksort(arr);
-        //}
-        System.out.println(Arrays.toString(arr));
     }
+    
 }
