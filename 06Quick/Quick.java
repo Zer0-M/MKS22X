@@ -65,15 +65,15 @@ public class Quick{
     public static int quickselect(int[] data, int k){
         int start=0;
         int end=data.length-1;
-        int[] part=partition(data,start,end);
-        while(part[1]>k&&part[0]<k){ 
-            part=partition(data,start,end);
-            if(part[0]>k){
-                end=part[0];
+        int part=partition0(data,start,end);
+        while(start<end&&k!=part){ 
+            if(part>k){
+                end=part-1;
             }
-            else if(part[1]<k){
-                start=part[1];
+            else if(part<k){
+                start=part+1;
             }
+            part=partition0(data,start,end);
         }
         return data[k];
     }

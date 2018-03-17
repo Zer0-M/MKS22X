@@ -1,7 +1,7 @@
 import java.util.*;
 public class Driver{
     public static void main(String[] args){
-        for(int j=0;j<1;j++){
+        for(int j=0;j<1000;j++){
             Random rand=new Random();
             int length= rand.nextInt(1000);
             int[] arr=new int[length];
@@ -23,10 +23,10 @@ public class Driver{
             // stopTime = System.nanoTime();
             // long elapsedTimeB = stopTime - startTime;
             //System.out.println("Built in: "+elapsedTimeB);
-            if(!Arrays.equals(arr,ary)){
+            /*if(!Arrays.equals(arr,ary)){
                  System.out.println("Test failed");
                 System.out.println(Arrays.toString(arr));
-             }
+             }*/
              for(int i=0;i<ar.length;i++){
                  int k=Quick.quickselect(ar, i);
                  if(ary[i]!=k){
