@@ -1,7 +1,9 @@
 import java.util.*;
 public class Driver{
     public static void main(String[] args){
-        for(int j=0;j<100;j++){
+        int winD=0;
+        int win=0;
+        for(int j=0;j<1000;j++){
             Random rand=new Random();
             int length= rand.nextInt(1000);
             int[] arr=new int[length];
@@ -10,6 +12,9 @@ public class Driver{
             int[] data=new int[length];
             for(int i=0;i<length;i++){
                 int r=rand.nextInt(rand.nextInt(100)+1);
+                if(i%5==0){
+                    r=0-r;
+                }
                 arr[i]=r;
                 ary[i]=r;
                 ar[i]=r;
@@ -24,12 +29,14 @@ public class Driver{
             Quick.quicksortOld(ar);
             end = System.nanoTime();
             long elapsed=end-start;
+
             if(elapsed>elapsedD){
-                System.out.println("Dutch Flag Partition Wins");
+                winD++;
             }
             else{
-                System.out.println("Regular Partition Wins");
+                win++;
             }
+
             // startTime=System.currentTimeMillis();
             Arrays.sort(ary);
             // stopTime = System.currentTimeMillis();
@@ -45,6 +52,14 @@ public class Driver{
                      System.out.println("quickselect Test failed");
                  }
              }
+        }
+        if(winD>win){
+            System.out.println("Dutch Flag Partition Wins ");
+            System.out.println("Dutch Flag: "+winD+" vs Regular: "+win);
+        }
+        else{
+            System.out.println("Regular Partition Wins");
+            System.out.println("Dutch Flag: "+winD+" vs Regular: "+win);
         }
 
     }
