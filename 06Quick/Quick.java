@@ -87,4 +87,14 @@ public class Quick{
             sortHelper(data,part[1],end);
         }
     }
+    public static void quicksortOld(int[] data){
+        sortHelperOld(data, 0,data.length-1 );
+    }
+    private static void sortHelperOld(int[] data,int start, int end){
+        if(start<end){
+            int part=partition0(data,start,end);
+            sortHelperOld(data,start,part-1);
+            sortHelperOld(data,part+1,end);
+        }
+    }
 }
