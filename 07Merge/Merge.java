@@ -32,10 +32,15 @@ public class Merge{
             data[i]=temp[i];
         }
     }
-    public static void main(String[] args){
-        int[] arr={0,2,6,1,6,3,2,5};
-        Merge.merge(arr,0,4);
-        System.out.println(Arrays.toString(arr));
-
+    public static void mergesort(int[] data){
+		mergesortH(data, 0, data.length-1);
+    }
+    private static void mergesortH(int[] data,int lo,int hi){
+        if(lo<hi){
+            int mid=lo+(hi-lo)/2;
+            mergesortH(data, lo, mid);
+            mergesortH(data, mid+1, hi);
+            merge(data,lo,hi);
+        }
     }
 }
