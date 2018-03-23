@@ -77,6 +77,17 @@ public class Driver{
   private static int create(int min, int max){
     return min + (int)(Math.random()*(max-min));
   }
+    private static void sortSelect(int type,int[] data){
+	if(type==1){
+	    Merge.mergesort(data);
+	}
+	if(type==2){
+	    Quick.quicksort(data);
+	}
+	if(type==3){
+	    Merge.insertionSort(data,0,data.length-1);
+	}
+    }
 
   private static int[]makeArray(int size,int type){
     int[]ans =new int[size];
@@ -114,7 +125,7 @@ public class Driver{
       //if(args.length < 2)return;
     for(int i=0;i<5;i++){
     Random rand=new Random();
-    int size =  1000000;// rand.nextInt(1000);
+    int size =100000; //rand.nextInt(1000000);
     int type =   i;
 
     int [] start = makeArray(size,type);
@@ -122,7 +133,7 @@ public class Driver{
     Arrays.sort(result);
     
     long startTime = System.currentTimeMillis();
-    Merge.mergesort(start);
+    sortSelect(1,start);
     long elapsedTime = System.currentTimeMillis() - startTime;
     if(Arrays.equals(start,result)){
       System.out.println("PASS Case "+type+". "+name(type)+" array, size:"+size+" "+elapsedTime/1000.0+"sec ");

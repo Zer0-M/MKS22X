@@ -36,12 +36,23 @@ public class Merge{
         }
 		mergesortH(data,temp, 0, data.length-1);
     }
-    private static void mergesortH(int[] data,int[] temp,int lo,int hi){
-        if(lo<hi){
-            int mid=lo+(hi-lo)/2;
-            mergesortH(temp,data, lo, mid);
-            mergesortH(temp,data, mid+1, hi);
-            merge(data,temp,lo,hi);
+    public static void insertionSort(int[] data,int lo,int hi){
+      for(int i=lo+1;i<=hi;i++){
+        int startVal=data[i];
+        int tempint=i-1;
+        while(tempint>=0&&data[tempint]>startVal){
+          data[tempint+1]=data[tempint];
+          tempint--;  
         }
+        data[tempint+1]=startVal;
+        
+      }
+    }
+    private static void mergesortH(int[] data,int[] temp,int lo,int hi){
+	if(lo<hi){
+		int mid=lo+(hi-lo)/2;
+		mergesortH(temp,data, lo, mid);
+		mergesortH(temp,data, mid+1, hi);
+
     }
 }
