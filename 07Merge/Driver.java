@@ -85,7 +85,7 @@ public class Driver{
 	    Quick.quicksort(data);
 	}
 	if(type==3){
-	    Merge.insertionSort(data,0,data.length-1);
+	    Merge.insertionSort(data,4,9);
 	}
     }
 
@@ -125,7 +125,7 @@ public class Driver{
       //if(args.length < 2)return;
     for(int i=0;i<5;i++){
     Random rand=new Random();
-    int size =100000; //rand.nextInt(1000000);
+    int size =1000000; //rand.nextInt(1000000);
     int type =   i;
 
     int [] start = makeArray(size,type);
