@@ -80,11 +80,28 @@ public class Quick{
     public static void quicksort(int[] data){
         sortHelper(data, 0,data.length-1 );
     }
+    public static void insertionSort(int[] data,int lo,int hi){
+        for(int i=lo;i<=hi;i++){
+            int startVal=data[i];
+            int tempint=i-1;
+            while(tempint>=lo&&data[tempint]>startVal){
+                data[tempint+1]=data[tempint];
+                tempint--;  
+            }
+            data[tempint+1]=startVal;
+            
+        }
+    }
     private static void sortHelper(int[] data,int start, int end){
         if(start<end){
+            if((end-start)<10){
+                insertionSort(data,start,end);
+            }
+            else{
             int[] part=partition(data,start,end);
             sortHelper(data,start,part[0]);
             sortHelper(data,part[1],end);
+            }
         }
     }
     public static void quicksortOld(int[] data){
