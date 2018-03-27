@@ -49,7 +49,7 @@ public class Merge{
     private static void mergesortH(int[] data,int[] temp,int lo,int hi){
        	//System.out.println("t "+lo+" "+hi);
         if(lo<hi){
-            if((hi-lo)<10){
+            if((hi-lo)<4){
                 //System.out.println(Arrays.toString(temp));
                 insertionSort(data, lo, hi);
                 //System.out.println(lo+" "+hi+" "+Arrays.toString(data));
