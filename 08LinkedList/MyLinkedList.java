@@ -1,5 +1,28 @@
 public class MyLinkedList{
-    public class Node{
+    private Node first;
+    private Node last;
+    private int length;
+    public MyLinkedList(int len){
+
+    }
+    public boolean add(int value){
+        return true;
+    }
+    public int size(){
+        return length;
+    }
+    public String toString(){
+        return"";
+    }
+    public int get(int index){
+		return 0;
+    }
+    public int set(int index,int newValue){
+		return 0;
+    }
+    
+    
+    private class Node{
         Node next,prev;
         int data;
         public Node(int dat){
@@ -18,7 +41,7 @@ public class MyLinkedList{
             return prev;
         }
         public void setPrev(Node n){
-         	prev=n;  
+            prev=n;  
         }
         public int getValue(){
 			return data;
