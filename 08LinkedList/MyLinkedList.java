@@ -1,3 +1,4 @@
+import java.util.*;
 public class MyLinkedList{
     private Node first;
     private Node last;
@@ -56,18 +57,35 @@ public class MyLinkedList{
         s+="]";
         return s;
     }
+    private Node getNode(int index){
+	Node n=first;
+        //currently assuming index exists exceptions will be added later
+	if(index>=length||index<0){
+	    throw new IndexOutOfBoundsException();
+	}
+	for(int i=0;i!=index;i++){
+	    n=n.getNext();
+	}
+	return n;
+    }
     public int get(int index){
         Node n=first;
         //currently assuming index exists exceptions will be added later
-        for(int i=0;i!=index;i++){
-			n=n.getNext();
-        }
-		return n.getValue();
+	if(index>=length||index<0){
+	    throw new IndexOutOfBoundsException();
+	}
+	for(int i=0;i!=index;i++){
+	    n=n.getNext();
+	}
+	return n.getValue();
     }
     public int set(int index,int newValue){
         Node n=first;
+        if(index>=length||index<0){
+	    throw new IndexOutOfBoundsException();
+	}
         for(int i=0;i!=index;i++){
-			n=n.getNext();
+	    n=n.getNext();
         }
         int old=n.getValue();
         n.setValue(newValue);
@@ -97,10 +115,10 @@ public class MyLinkedList{
             prev=n;  
         }
         public int getValue(){
-			return data;
+	    return data;
         }
         public void setValue(int n){
-			data=n;
+	    data=n;
         }
         public boolean hasNext(){
             if(getNext()==null){
@@ -113,11 +131,9 @@ public class MyLinkedList{
     }
     public static void main(String[] args){
         MyLinkedList L=new MyLinkedList();
-        L.add(4);
-        L.add(5);
-        L.add(4);
-        L.add(6);
-        System.out.println(L.set(1,9999));
-        System.out.println(L);
+	Random rand=new Random();
+	for(int i=0;i<100;i++){
+	    L.add(rand.nextInt(100));
+	}	
     }
 }
