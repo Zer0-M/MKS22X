@@ -20,6 +20,18 @@ public class MyLinkedList{
             first=first.getPrev();
             first.setNext(temp);
         }*/
+        if(last==null){
+            last=addend;
+            first=last;
+        }
+        else{
+            Node temp=new Node(last.getValue());
+            temp.setNext(last.getNext());
+            temp.setPrev(last.getPrev());
+            last.setNext(addend);
+            last=last.getNext();
+            last.setPrev(temp);
+        }
         length++;
         //last.setNext(addend);
 
@@ -90,6 +102,10 @@ public class MyLinkedList{
     }
     public static void main(String[] args){
         MyLinkedList L=new MyLinkedList();
+        L.add(4);
+        L.add(5);
+        L.add(4);
+        L.add(4);
         System.out.println(L);
     }
 }
