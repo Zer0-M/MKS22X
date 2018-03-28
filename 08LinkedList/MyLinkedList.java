@@ -57,10 +57,21 @@ public class MyLinkedList{
         return s;
     }
     public int get(int index){
-		return 0;
+        Node n=first;
+        //currently assuming index exists exceptions will be added later
+        for(int i=0;i!=index;i++){
+			n=n.getNext();
+        }
+		return n.getValue();
     }
     public int set(int index,int newValue){
-		return 0;
+        Node n=first;
+        for(int i=0;i!=index;i++){
+			n=n.getNext();
+        }
+        int old=n.getValue();
+        n.setValue(newValue);
+        return old;
     }
     
     
@@ -105,7 +116,8 @@ public class MyLinkedList{
         L.add(4);
         L.add(5);
         L.add(4);
-        L.add(4);
+        L.add(6);
+        System.out.println(L.set(1,9999));
         System.out.println(L);
     }
 }
