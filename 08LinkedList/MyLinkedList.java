@@ -26,28 +26,25 @@ public class MyLinkedList{
             first=last;
         }
         else{
-            Node temp=new Node(last.getValue());
-            temp.setNext(last.getNext());
-            temp.setPrev(last.getPrev());
             last.setNext(addend);
+            last.getNext().setPrev(last);
             last=last.getNext();
-            last.setPrev(temp);
         }
         length++;
         //last.setNext(addend);
-
+        
         return true;
     }
     public int size(){
         return length;
     }
-
+    
     public String toString(){
         Node n=first;
         String s="[";
         for(int i=0;i<length;i++){
             if(n!=null){
-            s+=n.getValue();
+                s+=n.getValue();
             }
             if(n.hasNext()){
                 s+=",";
@@ -58,34 +55,34 @@ public class MyLinkedList{
         return s;
     }
     private Node getNode(int index){
-	Node n=first;
+        Node n=first;
         //currently assuming index exists exceptions will be added later
-	if(index>=length||index<0){
-	    throw new IndexOutOfBoundsException();
-	}
-	for(int i=0;i!=index;i++){
-	    n=n.getNext();
-	}
-	return n;
+        if(index>=length||index<0){
+            throw new IndexOutOfBoundsException();
+        }
+        for(int i=0;i!=index;i++){
+            n=n.getNext();
+        }
+        return n;
     }
     public int get(int index){
         Node n=first;
         //currently assuming index exists exceptions will be added later
-	if(index>=length||index<0){
-	    throw new IndexOutOfBoundsException();
-	}
-	for(int i=0;i!=index;i++){
-	    n=n.getNext();
-	}
-	return n.getValue();
+        if(index>=length||index<0){
+            throw new IndexOutOfBoundsException();
+        }
+        for(int i=0;i!=index;i++){
+            n=n.getNext();
+        }
+        return n.getValue();
     }
     public int set(int index,int newValue){
-        Node n=first;
+        Node n=last;
         if(index>=length||index<0){
-	    throw new IndexOutOfBoundsException();
-	}
-        for(int i=0;i!=index;i++){
-	    n=n.getNext();
+            throw new IndexOutOfBoundsException();
+        }
+        for(int i=length-1;i!=index;i--){
+            n=n.getPrev();
         }
         int old=n.getValue();
         n.setValue(newValue);
@@ -115,10 +112,10 @@ public class MyLinkedList{
             prev=n;  
         }
         public int getValue(){
-	    return data;
+            return data;
         }
         public void setValue(int n){
-	    data=n;
+            data=n;
         }
         public boolean hasNext(){
             if(getNext()==null){
@@ -131,9 +128,10 @@ public class MyLinkedList{
     }
     public static void main(String[] args){
         MyLinkedList L=new MyLinkedList();
-	Random rand=new Random();
-	for(int i=0;i<100;i++){
-	    L.add(rand.nextInt(100));
-	}	
+        Random rand=new Random();
+        for(int i=0;i<10;i++){
+            L.add(rand.nextInt(100));
+        }
+        System.out.println(L);	
     }
 }
