@@ -7,7 +7,17 @@ public class MyLinkedList{
         length=0;
     }
     public boolean add(int value){
-        add(length-1,value);
+        Node addend=new Node(value);
+        if(last==null){
+            last=addend;
+            first=last;
+        }
+        else{
+            last.setNext(addend);
+            last.getNext().setPrev(last);
+            last=last.getNext();
+        }
+        length++;
         //last.setNext(addend);
         
         return true;
@@ -77,7 +87,7 @@ public class MyLinkedList{
     }
     public void add(int index,int value){
         Node addend=new Node(value);
-        if(index==0){        
+        if(index==0||first==null){        
             if(first==null){
                 first=addend;
                 last=first;
@@ -90,18 +100,12 @@ public class MyLinkedList{
             length++;
         }
         else if(index==length-1){
-            if(last==null){
-                last=addend;
-                first=last;
-            }
-            else{
-                last.setNext(addend);
-                last.getNext().setPrev(last);
-                last=last.getNext();
-            }
-            length++;
+            add(value);
         }
         else{
+            if(index>=length||index<0){
+                throw new IndexOutOfBoundsException();
+            }
             Node n=getNode(index);
             Node n1=getNode(index-1);
             addend.setNext(n);
@@ -110,9 +114,19 @@ public class MyLinkedList{
             n1.setNext(addend);
             length++;
         }
-        
     }
-    
+    public int remove(int index){
+        if(index>=length||index<0){
+            throw new IndexOutOfBoundsException();
+        }
+        Node n=getNode(index);
+        Node prev=n.getPrev();
+        Node next=n.getNext();
+        prev.setNext(next);
+        next.setPrev(prev);
+        length--;
+        return n.getValue();
+    }
     private class Node{
         Node next,prev;
         int data;
@@ -153,12 +167,21 @@ public class MyLinkedList{
         MyLinkedList L=new MyLinkedList();
         Random rand=new Random();
         for(int i=0;i<10;i++){
-            L.add(rand.nextInt(100));
+            int value=i;
+            System.out.println(value);
+            L.add(value);
         }
         
         //int val=L.get(2);
         System.out.println(L);
-        L.add(9,25);
+        //L.add(9,25);
+        L.remove(8);
+        System.out.println(L);
+        L.add(8,10);
+        System.out.println(L);
+        L.set(0,6);
+        System.out.println(L);
+        L.get(4);
         System.out.println(L);
         //System.out.println(L.indexOf(val));	
     }
