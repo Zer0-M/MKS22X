@@ -120,12 +120,30 @@ public class MyLinkedList{
             throw new IndexOutOfBoundsException();
         }
         Node n=getNode(index);
-        Node prev=n.getPrev();
-        Node next=n.getNext();
-        prev.setNext(next);
-        next.setPrev(prev);
+        int val=n.getValue();
+        if(length==1){
+            n=n.getNext();
+            return val;
+        }
+        else if(index==0){
+            first=n.getNext();
+            first.setPrev(null);
+        }
+        else if(index==length-1){
+            last=n.getPrev();
+            last.setNext(null);
+        }
+        else{
+                Node prev=n.getPrev();
+                Node next=n.getNext();
+                prev.setNext(next);
+                next.setPrev(prev);
+            
+            
+        }
         length--;
-        return n.getValue();
+        return val;
+        
     }
     private class Node{
         Node next,prev;
@@ -175,7 +193,7 @@ public class MyLinkedList{
         //int val=L.get(2);
         System.out.println(L);
         //L.add(9,25);
-        L.remove(8);
+        L.remove(9);
         System.out.println(L);
         L.add(8,10);
         System.out.println(L);
