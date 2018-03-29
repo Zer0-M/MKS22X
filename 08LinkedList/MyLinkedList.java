@@ -134,10 +134,10 @@ public class MyLinkedList{
             last.setNext(null);
         }
         else{
-                Node prev=n.getPrev();
-                Node next=n.getNext();
-                prev.setNext(next);
-                next.setPrev(prev);
+            Node prev=n.getPrev();
+            Node next=n.getNext();
+            prev.setNext(next);
+            next.setPrev(prev);
             
             
         }
