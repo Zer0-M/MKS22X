@@ -14,12 +14,9 @@ public class MyLinkedList{
             last=first;
         }
         else{
-            Node temp=new Node(first.getValue());
-            temp.setNext(first.getNext());
-            temp.setPrev(first.getPrev());
             first.setPrev(addend);
+            first.getPrev().setNext(first);
             first=first.getPrev();
-            first.setNext(temp);
         }*/
         if(last==null){
             last=addend;
@@ -88,7 +85,16 @@ public class MyLinkedList{
         n.setValue(newValue);
         return old;
     }
-    
+    public int indexOf(int value){
+        Node n=first;
+        for(int i=0;i<length;i++){
+            if(n.getValue()==value){
+                return i;
+            }
+            n=n.getNext();
+        }
+        return -1;
+    }
     
     private class Node{
         Node next,prev;
@@ -132,6 +138,9 @@ public class MyLinkedList{
         for(int i=0;i<10;i++){
             L.add(rand.nextInt(100));
         }
-        System.out.println(L);	
+        
+        int val=L.get(2);
+        System.out.println(L);
+        System.out.println(L.indexOf(val));	
     }
 }
