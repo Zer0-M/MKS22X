@@ -7,27 +7,7 @@ public class MyLinkedList{
         length=0;
     }
     public boolean add(int value){
-        Node addend=new Node(value);
-        /*adding from the front
-        if(first==null){
-            first=addend;
-            last=first;
-        }
-        else{
-            first.setPrev(addend);
-            first.getPrev().setNext(first);
-            first=first.getPrev();
-        }*/
-        if(last==null){
-            last=addend;
-            first=last;
-        }
-        else{
-            last.setNext(addend);
-            last.getNext().setPrev(last);
-            last=last.getNext();
-        }
-        length++;
+        add(length-1,value);
         //last.setNext(addend);
         
         return true;
@@ -95,6 +75,43 @@ public class MyLinkedList{
         }
         return -1;
     }
+    public void add(int index,int value){
+        Node addend=new Node(value);
+        if(index==0){        
+            if(first==null){
+                first=addend;
+                last=first;
+            }
+            else{
+                first.setPrev(addend);
+                first.getPrev().setNext(first);
+                first=first.getPrev();
+            }
+            length++;
+        }
+        else if(index==length-1){
+            if(last==null){
+                last=addend;
+                first=last;
+            }
+            else{
+                last.setNext(addend);
+                last.getNext().setPrev(last);
+                last=last.getNext();
+            }
+            length++;
+        }
+        else{
+            Node n=getNode(index);
+            Node n1=getNode(index-1);
+            addend.setNext(n);
+            addend.setPrev(n1);
+            n.setPrev(addend);
+            n1.setNext(addend);
+            length++;
+        }
+        
+    }
     
     private class Node{
         Node next,prev;
@@ -139,8 +156,10 @@ public class MyLinkedList{
             L.add(rand.nextInt(100));
         }
         
-        int val=L.get(2);
+        //int val=L.get(2);
         System.out.println(L);
-        System.out.println(L.indexOf(val));	
+        L.add(9,25);
+        System.out.println(L);
+        //System.out.println(L.indexOf(val));	
     }
 }
