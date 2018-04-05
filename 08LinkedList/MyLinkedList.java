@@ -6,7 +6,7 @@ public class MyLinkedList{
     public MyLinkedList(){
         length=0;
     }
-    public boolean add(int value){
+    public boolean add(Integer value){
         Node addend=new Node(value);
         if(last==null){
             last=addend;
@@ -86,7 +86,7 @@ public class MyLinkedList{
         }
         return -1;
     }
-    public void add(int index,int value){
+    public void add(int index,Integer value){
         Node addend=new Node(value);
 	if(index>=length||index<0){
 	    throw new IndexOutOfBoundsException();
@@ -116,7 +116,7 @@ public class MyLinkedList{
             length++;
         }
     }
-    public int remove(int index){
+    public Integer remove(int index){
         if(index>=length||index<0){
             throw new IndexOutOfBoundsException();
         }
@@ -199,11 +199,12 @@ public class MyLinkedList{
         //System.out.println(L);
         //L.add(8,10);
 	// System.out.println(L);
-        //L.set(0,6);
+        L.set(0,6);
+        L.remove(4);
         //System.out.println(L);
-        System.out.println(L.get(4));
-	System.out.println(L.set(4,5));
-	System.out.println(L.indexOf(5));
+        System.out.println(L);
+	//System.out.println(L.set(4,5));
+	//System.out.println(L.indexOf(5));
         //System.out.println(L);
         //System.out.println(L.indexOf(val));	
     }
