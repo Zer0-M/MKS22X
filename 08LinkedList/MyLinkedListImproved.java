@@ -1,5 +1,5 @@
 import java.util.*;
-public class MyLinkedListImproved<T>{
+public class MyLinkedListImproved<T> implements Iterable<T>{
     private Node first;
     private Node last;
     private int length;
@@ -36,7 +36,7 @@ public class MyLinkedListImproved<T>{
             if(n!=null){
                 s+=n.getValue();
             }
-            if(n.hasNext()){
+            if(n.getNext()!=null){
                 s+=",";
                 n=n.getNext();
             }
@@ -76,18 +76,18 @@ public class MyLinkedListImproved<T>{
         return old;
     }
     public int indexOf(T value){
-        Node n=first;
-        for(int i=0;i<size();i++){
-            if(value.equals(n.getValue())){
+        int i=0;
+        for(T v:this){
+            if(value.equals(v)){
                 return i;
             }
-            n=n.getNext();
+            i++;
         }
         return -1;
     }
     public void add(int index,T value){
         Node addend=new Node(value);
-
+        
         if(index==0){        
             if(first==null){
                 first=addend;
@@ -153,6 +153,31 @@ public class MyLinkedListImproved<T>{
         }
         return false;
     }
+    public Iterator<T> iterator(){
+        LinkedListIterator i=new LinkedListIterator(first);
+        return i;
+    }
+    private class LinkedListIterator implements Iterator<T>{
+        Node current;
+        public LinkedListIterator(Node n){
+            current=n;
+        }
+        public boolean hasNext(){
+            return current!=null;
+        }
+        public T next(){
+            T n=null;
+            if(hasNext()){
+                n= current.getValue();
+                current=current.getNext();
+            }
+            else{
+                System.exit(0);
+            }
+            return n;
+            
+        } 
+    }
     private class Node{
         Node next,prev;
         T data;
@@ -179,14 +204,6 @@ public class MyLinkedListImproved<T>{
         }
         public void setValue(T n){
             data=n;
-        }
-        public boolean hasNext(){
-            if(getNext()==null){
-                return false;
-            }
-            else{
-                return true;
-            }
         }
     }
 }
