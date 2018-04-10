@@ -1,5 +1,5 @@
 import java.util.*;
-public class MyLinkedListImproved<T> implements Iterable<T>{
+public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T>{
     private Node first;
     private Node last;
     private int length;
@@ -85,6 +85,40 @@ public class MyLinkedListImproved<T> implements Iterable<T>{
         }
         return -1;
     }
+    public int max(){
+	if(size()==0){
+	    return -1;
+	}
+	T largest=first.getValue();
+	int maxI=0;
+	int i=0;
+	for(T v:this){
+	    if(largest.compareTo(v)<0){
+		largest=v;
+		maxI=i;
+	    }
+	    i++;
+	}
+	return maxI;
+	
+    }
+    public int min(){
+	if(size()==0){
+	    return -1;
+	}
+	T smallest=first.getValue();
+	int minI=0;
+	int i=0;
+	for(T v:this){
+	    if(smallest.compareTo(v)>0){
+		smallest=v;
+		minI=i;
+	    }
+	    i++;
+	}
+	return minI;
+	
+    }
     public void add(int index,T value){
         Node addend=new Node(value);
         
@@ -153,6 +187,7 @@ public class MyLinkedListImproved<T> implements Iterable<T>{
         }
         return false;
     }
+    
     public Iterator<T> iterator(){
         LinkedListIterator i=new LinkedListIterator(first);
         return i;
@@ -205,5 +240,16 @@ public class MyLinkedListImproved<T> implements Iterable<T>{
         public void setValue(T n){
             data=n;
         }
+    }
+    public static void main(String[] args){
+	MyLinkedListImproved<Integer> L=new MyLinkedListImproved<>();
+	Random rand=new Random();
+	for(int i=0;i<100;i++){
+            int value=rand.nextInt(100);
+            L.add(value);
+        }
+	System.out.println(L);
+	System.out.println(L.min());
+	System.out.println(L.max());
     }
 }
