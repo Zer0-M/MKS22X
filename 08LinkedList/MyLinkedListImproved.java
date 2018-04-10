@@ -242,11 +242,17 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
     }
     public static void main(String[] args){
-	MyLinkedListImproved<Integer> L=new MyLinkedListImproved<>();
+	MyLinkedListImproved<Character> L=new MyLinkedListImproved<>();
 	Random rand=new Random();
-	for(int i=0;i<100;i++){
-            int value=rand.nextInt(100);
-            L.add(value);
+	String s="";
+	for(int i=1;i<26;i++){
+            int value=65+rand.nextInt(57);
+	    char c=(char)value;
+	    //if(i%5==0){
+		L.add(c);
+		//	s="";
+		//}
+		//s+=c;
         }
 	System.out.println(L);
 	System.out.println(L.min());
