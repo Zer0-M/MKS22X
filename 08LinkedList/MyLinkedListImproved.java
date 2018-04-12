@@ -7,6 +7,8 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         length=0;
     }
     public void clear(){
+	first=null;
+	last=null;
         length=0;
     }
     public boolean add(T value){
@@ -25,6 +27,15 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         
         return true;
     }
+    public void extend(MyLinkedListImproved<T> O){
+	if(O.size()>0){
+	    this.getNode(size()-1).setNext(O.getNode(0));
+	    last=O.getNode(size()-1);
+	    this.length+=O.size();
+	    O.clear();
+	}
+    }
+    
     public int size(){
         return length;
     }
@@ -242,19 +253,24 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
     }
     public static void main(String[] args){
-	MyLinkedListImproved<Character> L=new MyLinkedListImproved<>();
+	MyLinkedListImproved<Integer> L=new MyLinkedListImproved<>();
+	MyLinkedListImproved<Integer> LL=new MyLinkedListImproved<>();
 	Random rand=new Random();
 	String s="";
 	for(int i=1;i<26;i++){
             int value=65+rand.nextInt(57);
 	    char c=(char)value;
 	    //if(i%5==0){
-		L.add(c);
+		L.add(value);
+		//LL.add(value*rand.nextInt(10));
 		//	s="";
 		//}
 		//s+=c;
         }
 	System.out.println(L);
+	System.out.println(LL);
+	System.out.println(L);
+	System.out.println(LL);
 	System.out.println(L.min());
 	System.out.println(L.max());
     }
