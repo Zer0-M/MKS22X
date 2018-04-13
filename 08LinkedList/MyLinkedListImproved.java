@@ -28,11 +28,19 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         return true;
     }
     public void extend(MyLinkedListImproved<T> O){
-	if(O.size()>0){
-	    this.getNode(size()-1).setNext(O.getNode(0));
-	    last=O.getNode(size()-1);
+	if(O.size()>0&&O!=null){
+        if(this.size()==0){
+           first=O.getNode(0);
+           last=O.getNode(O.size()-1);
+           length=O.size();
+        }
+        else{
+            this.getNode(size()-1).setNext(O.getNode(0));
+        
+	    last=O.getNode(O.size()-1);
 	    this.length+=O.size();
-	    O.clear();
+        O.clear();
+        }
 	}
     }
     
@@ -57,6 +65,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     }
     private Node getNode(int index){
         Node n=first;
+        //System.out.println(index);
         //currently assuming index exists exceptions will be added later
         if(index>size()||index<0){
             throw new IndexOutOfBoundsException();
