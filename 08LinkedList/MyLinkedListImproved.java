@@ -36,7 +36,8 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
         else{
             this.getNode(size()-1).setNext(O.getNode(0));
-        
+	    O.getNode(0).setPrev(this.getNode(size()-1));
+            
 	    last=O.getNode(O.size()-1);
 	    this.length+=O.size();
         O.clear();
