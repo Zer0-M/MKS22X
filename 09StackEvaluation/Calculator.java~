@@ -1,5 +1,5 @@
 import java.util.*;
-public class Evaluation{
+public class Calculator{
     private static int isOperator(String s){
         String[] operators={"+","-","*","/","%"};
 		for(int i=0;i<operators.length;i++){
