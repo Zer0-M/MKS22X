@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class MyDeque<T>{
     private T[] data;
@@ -12,6 +12,9 @@ public class MyDeque<T>{
     }
     @SuppressWarnings("unchecked")
     public MyDeque(int initialCapacity){
+        if(initialCapacity<0){
+            throw new IllegalArgumentException();
+        }
         length=0;
         data=(T[])new Object[initialCapacity];
         start=0;
@@ -43,6 +46,9 @@ public class MyDeque<T>{
         return length;
     }
     public void addFirst(T v){
+        if(v==null){
+            throw new NullPointerException();
+        }
         if(data[start]==null){
             data[start]=v;
         }
@@ -50,39 +56,45 @@ public class MyDeque<T>{
             int ind=data.length+(start-1);
             System.out.println(ind);
             if(data[ind]==null){
-            	data[ind]=v;
-           	    start=ind;
+                data[ind]=v;
+                start=ind;
             }
         }
         else{
             if(data[(start-1)]==null){
-            	data[start-1]=v;
-            	start=start-1;
+                data[start-1]=v;
+                start=start-1;
             }
             System.out.println(start);
         }
         length++;
     }
     public void addLast(T v){
+        if(v==null){
+            throw new NullPointerException();
+        }
         if(data[end]==null){
             data[end]=v;
         }
         if(end+1>data.length){
             int ind=(end+1)%data.length;
             if(data[ind]==null){
-            	data[ind]=v;
+                data[ind]=v;
                 end=ind;
             }
         }
         else{
             if(data[(end+1)]==null){
-            	data[end+1]=v;
-            	end=end+1;
+                data[end+1]=v;
+                end=end+1;
             }
         }
         length++;
     }
 	public T removeFirst(){
+        if(size()==0){
+            throw new NoSuchElementException();
+        }
         T removed=null;
         removed=data[start];
         data[start]=null;
@@ -96,6 +108,9 @@ public class MyDeque<T>{
         return removed;    
     }
     public T removeLast(){
+        if(size()==0){
+            throw new NoSuchElementException();
+        }
         T removed=null;
         removed=data[end];
         data[end]=null;
@@ -109,20 +124,31 @@ public class MyDeque<T>{
         return removed;
     }
     public T getFirst(){
-      return data[start];  
+        if(size()==0){
+            throw new NoSuchElementException();
+        }
+        return data[start];  
     }
     public T getLast(){
-     return data[end];   
+        if(size()==0){
+            throw new NoSuchElementException();
+        }
+        return data[end];   
     }
     public static void main(String[] args){
         MyDeque<Integer> D=new MyDeque<>();
         D.addFirst(9);
-        D.addFirst(2);
+        D.addFirst(2525);
         D.addLast(3);
         D.addFirst(56363);
         D.addLast(24);
         System.out.println(D);
         System.out.println(D.removeFirst());
+        System.out.println(D.removeFirst());
+        System.out.println(D.removeFirst());
+        System.out.println(D.removeFirst());
+        System.out.println(D.removeFirst());
+        System.out.println(D.getLast());
         System.out.println(D.getFirst());
         System.out.println(D);
         System.out.println(D.removeLast());
