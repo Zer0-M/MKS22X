@@ -46,6 +46,9 @@ public class MyDeque<T>{
         return length;
     }
     public void addFirst(T v){
+        if(size()==data.length){
+            resize();
+        }
         if(v==null){
             throw new NullPointerException();
         }
@@ -54,7 +57,6 @@ public class MyDeque<T>{
         }
         else if(start-1<0){
             int ind=data.length+(start-1);
-            System.out.println(ind);
             if(data[ind]==null){
                 data[ind]=v;
                 start=ind;
@@ -65,11 +67,13 @@ public class MyDeque<T>{
                 data[start-1]=v;
                 start=start-1;
             }
-            System.out.println(start);
         }
         length++;
     }
     public void addLast(T v){
+        if(size()==data.length){
+            resize();
+        }
         if(v==null){
             throw new NullPointerException();
         }
@@ -135,25 +139,42 @@ public class MyDeque<T>{
         }
         return data[end];   
     }
+    @SuppressWarnings("unchecked")
+    public void resize(){
+        T[] newData=(T[])new Object[data.length*2];
+        int num=0;
+        for(int i=start,j=data.length+start;num<size();){
+            newData[j]=data[i];
+            num++;
+            if(i==start){
+                start=j;
+            }
+            if(i==end){
+                end=j;
+            }
+            if(i>=data.length-1){
+                i=0;
+                j=0;
+            }
+            else{
+                j++;
+                i++;
+            }
+        }
+        data=newData; 
+    }
     public static void main(String[] args){
-        MyDeque<Integer> D=new MyDeque<>();
+        MyDeque<Integer> D=new MyDeque<>(5);
         D.addFirst(9);
         D.addFirst(2525);
         D.addLast(3);
         D.addFirst(56363);
         D.addLast(24);
-        System.out.println(D);
-        System.out.println(D.removeFirst());
-        System.out.println(D.removeFirst());
-        System.out.println(D.removeFirst());
-        System.out.println(D.removeFirst());
-        System.out.println(D.removeFirst());
-        System.out.println(D.getLast());
-        System.out.println(D.getFirst());
-        System.out.println(D);
-        System.out.println(D.removeLast());
-        System.out.println(D.getLast());
-        System.out.println(D);
+        D.addFirst(34);
+        D.addLast(41);
+        D.addFirst(37);
+        D.addLast(4141);
+        System.out.println(D);        
     }
     
 }
