@@ -47,15 +47,51 @@ public class MyHeap{
         length++;
         
     }
+    public String remove(){
+        String removed=data[0];
+        swap(data,0,size()-1);
+        data[size()-1]=null;
+        length--;
+        int j=0;
+        String s=data[j];
+        if(length>0){
+            if(isMax){
+                for(int i=2*j+1;data[i]!=null&&s.compareTo(data[i])<0;i=2*i+1){
+                    //System.out.println(i+" "+s.compareTo(data[i]));
+                    //System.out.println(s+" "+data[i]);
+                    if(data[i+1]!=null&&s.compareTo(data[i+1])<s.compareTo(data[i])){
+                        swap(data,i+1,j);
+                        j=i+1;
+                    }
+                    else{
+                        swap(data,i,j);
+                        j=i;
+                    }
+                    
+                }
+            }
+            else{
+                    
+                }
+            }
+        return removed;
+        
+    }
+
     public static void main(String[] args){
-        MyHeap h=new MyHeap(false);
+        MyHeap h=new MyHeap(true);
         h.add("Z");
         h.add("A");
-        h.add("Sa");
+        h.add("a");
         h.add("F");
         h.add("Z");
-        h.add("bold");
-        h.add("SZ");
+        h.add("d");
+        h.add("c");
+        h.remove();
+        h.remove();
+        h.remove();
+        h.remove();
+        h.remove();
         System.out.println(h);
     }
 }
