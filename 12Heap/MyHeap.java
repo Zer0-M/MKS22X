@@ -71,7 +71,19 @@ public class MyHeap{
                 }
             }
             else{
+                for(int i=2*j+1;data[i]!=null&&s.compareTo(data[i])>0;i=2*i+1){
+                    //System.out.println(i+" "+s.compareTo(data[i]));
+                    //System.out.println(s+" "+data[i]);
+                    if(data[i+1]!=null&&s.compareTo(data[i+1])>s.compareTo(data[i])){
+                        swap(data,i+1,j);
+                        j=i+1;
+                    }
+                    else{
+                        swap(data,i,j);
+                        j=i;
+                    }
                     
+                }
                 }
             }
         return removed;
@@ -79,7 +91,7 @@ public class MyHeap{
     }
 
     public static void main(String[] args){
-        MyHeap h=new MyHeap(true);
+        MyHeap h=new MyHeap(false);
         h.add("Z");
         h.add("A");
         h.add("a");
@@ -88,10 +100,10 @@ public class MyHeap{
         h.add("d");
         h.add("c");
         h.remove();
-        h.remove();
-        h.remove();
-        h.remove();
-        h.remove();
+         h.remove();
+        // h.remove();
+        // h.remove();
+        // h.remove();
         System.out.println(h);
     }
 }
