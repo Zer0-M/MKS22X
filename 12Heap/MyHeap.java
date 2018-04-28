@@ -5,11 +5,11 @@ public class MyHeap{
     int length;
     boolean isMax;
     public MyHeap(){
-        data=new String[13];
+        data=new String[15];
         isMax=true;
     }
     public MyHeap(boolean max){
-        data=new String[13];
+        data=new String[15];
         isMax=max;
     }
     public String toString(){
@@ -24,6 +24,9 @@ public class MyHeap{
         return length;
     }
     public void add(String s){
+        if(length==data.length){
+            resize();
+        }
         data[length]=s;
         int j=length;
         if(length>0){
@@ -56,7 +59,7 @@ public class MyHeap{
         String s=data[j];
         if(length>0){
             if(isMax){
-                for(int i=2*j+1;data[i]!=null&&s.compareTo(data[i])<0;i=2*i+1){
+                for(int i=2*j+1;i<data.length&&data[i]!=null&&s.compareTo(data[i])<0;i=2*i+1){
                     //System.out.println(i+" "+s.compareTo(data[i]));
                     //System.out.println(s+" "+data[i]);
                     if(data[i+1]!=null&&s.compareTo(data[i+1])<s.compareTo(data[i])){
@@ -71,7 +74,7 @@ public class MyHeap{
                 }
             }
             else{
-                for(int i=2*j+1;data[i]!=null&&s.compareTo(data[i])>0;i=2*i+1){
+                for(int i=2*j+1;i<data.length&&data[i]!=null&&s.compareTo(data[i])>0;i=2*i+1){
                     //System.out.println(i+" "+s.compareTo(data[i]));
                     //System.out.println(s+" "+data[i]);
                     if(data[i+1]!=null&&s.compareTo(data[i+1])>s.compareTo(data[i])){
@@ -89,6 +92,16 @@ public class MyHeap{
         return removed;
         
     }
+    public String peek(){
+        return data[0];
+    }
+    private void resize(){
+        String[] resized=new String[2*data.length+1];
+        for(int i=0;i<data.length;i++){
+            resized[i]=data[i];
+        }
+        data=resized;
+    }
 
     public static void main(String[] args){
         MyHeap h=new MyHeap(false);
@@ -99,9 +112,21 @@ public class MyHeap{
         h.add("Z");
         h.add("d");
         h.add("c");
+        h.add("Z");
+        h.add("A");
+        h.add("a");
+        h.add("F");
+        h.add("Z");
+        h.add("d");
+        h.add("c");
+        h.add("Z");
+        h.add("A");
+        h.add("a");
+        h.add("F");
+        h.add("Z");
+        h.add("d");
+        h.add("c");
         h.remove();
-         h.remove();
-        // h.remove();
         // h.remove();
         // h.remove();
         System.out.println(h);
