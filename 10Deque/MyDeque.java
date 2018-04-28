@@ -80,7 +80,7 @@ public class MyDeque<T>{
         if(data[end]==null){
             data[end]=v;
         }
-        if(end+1>data.length){
+        if(end+1>=data.length){
             int ind=(end+1)%data.length;
             if(data[ind]==null){
                 data[ind]=v;
@@ -95,7 +95,7 @@ public class MyDeque<T>{
         }
         length++;
     }
-	public T removeFirst(){
+    public T removeFirst(){
         if(size()==0){
             throw new NoSuchElementException();
         }
@@ -164,7 +164,7 @@ public class MyDeque<T>{
         data=newData; 
     }
     public static void main(String[] args){
-        MyDeque<Integer> D=new MyDeque<>(5);
+        MyDeque<Integer> D=new MyDeque<>(1);
         D.addFirst(9);
         D.addFirst(2525);
         D.addLast(3);
@@ -174,6 +174,10 @@ public class MyDeque<T>{
         D.addLast(41);
         D.addFirst(37);
         D.addLast(4141);
+	System.out.println(D.removeFirst());
+	System.out.println(D.removeLast());
+	System.out.println(D.getLast());
+	System.out.println(D.getFirst());
         System.out.println(D);        
     }
     
