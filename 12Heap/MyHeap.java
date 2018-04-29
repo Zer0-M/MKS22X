@@ -1,31 +1,34 @@
 import java.util.*;
 
-public class MyHeap<T extends Comparable<T>>{
-    T[] data;
+public class MyHeap/*<T extends Comparable<T>>*/{
+    //T[] data;
+    String[] data;
     int length;
     boolean isMax;
     @SuppressWarnings("unchecked")
     public MyHeap(){
-        data=(T[])new Comparable[15];
+        //data=(T[])new Comparable[15];
+        data=new String[15];
         isMax=true;
     }
     @SuppressWarnings("unchecked")
     public MyHeap(boolean max){
-        data=(T[])new Comparable[15];
+        //data=(T[])new Comparable[15];
+        data=new String[15];
         isMax=max;
     }
     public String toString(){
         return Arrays.toString(data);
     }
-    private void swap(T[] arr,int i,int j){
-        T temp=arr[i];
+    private void swap(/*T[]*/String[] arr,int i,int j){
+        /*T*/String temp=arr[i];
         arr[i]=arr[j];
         arr[j]=temp;
     }
     public int size(){
         return length;
     }
-    public void add(T s){
+    public void add(/*T*/String s){
         if(length==data.length){
             resize();
         }
@@ -52,13 +55,15 @@ public class MyHeap<T extends Comparable<T>>{
         length++;
         
     }
-    public T remove(){
-        T removed=data[0];
+    public /*T*/String remove(){
+        //T removed=data[0];
+        String removed=data[0];
         swap(data,0,size()-1);
         data[size()-1]=null;
         length--;
         int j=0;
-        T s=data[j];
+        //T s=data[j];
+        String s=data[j];
         if(length>0){
             if(isMax){
                 for(int i=2*j+1;i<data.length&&data[i]!=null&&data[i+1]!=null&&(s.compareTo(data[i])<0||s.compareTo(data[i+1])<0);i=2*j+1){
@@ -94,18 +99,19 @@ public class MyHeap<T extends Comparable<T>>{
         return removed;
         
     }
-    public T peek(){
+    public /*T*/String peek(){
         return data[0];
     }
     @SuppressWarnings("unchecked")
     private void resize(){
-        T[] resized=(T[])new Comparable[2*data.length+1];
+        /*T[] resized=(T[])new Comparable[2*data.length+1];*/
+        String[] resized=new String[2*data.length+1];
         for(int i=0;i<data.length;i++){
             resized[i]=data[i];
         }
         data=resized;
     }
-    public void Heapify(T[] dat){
+    /*public void Heapify(T[] dat){
         if(isMax){
             for(int ind=dat.length-1;ind>=0;ind--){
                 T s=dat[ind];
@@ -149,18 +155,11 @@ public class MyHeap<T extends Comparable<T>>{
                 }
             }  
         }
-    }
+    }*/
     
     public static void main(String[] args){
-        MyHeap<Integer> h=new MyHeap<>(false);
+        //MyHeap<Integer> h=new MyHeap<>(false);
         Random rand=new Random();
         Integer[] d={31,415,5,6,72314,15,6,115,725,85,64,0,12,10,7};
-        Integer z=new Integer(72314);
-        Integer x=new Integer(415);
-        System.out.println(x.compareTo(z));
-        System.out.println(Arrays.toString(d));
-        h.Heapify(d);
-        System.out.println(Arrays.toString(d));
-        System.out.println(h);
     }
 }
