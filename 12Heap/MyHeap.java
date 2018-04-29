@@ -1,34 +1,42 @@
 import java.util.*;
 
-public class MyHeap/*<T extends Comparable<T>>*/{
-    //T[] data;
-    String[] data;
+public class MyHeap<T extends Comparable<T>>{
+    T[] data;
     int length;
     boolean isMax;
     @SuppressWarnings("unchecked")
     public MyHeap(){
-        //data=(T[])new Comparable[15];
-        data=new String[15];
+        data=(T[])new Comparable[15];
         isMax=true;
     }
     @SuppressWarnings("unchecked")
     public MyHeap(boolean max){
-        //data=(T[])new Comparable[15];
-        data=new String[15];
+        data=(T[])new Comparable[15];
         isMax=max;
     }
     public String toString(){
-        return Arrays.toString(data);
+        String heap="[";
+        for(int i=0;i<length;i++){
+            if(data[i]!=null){
+                if(i==length-1){
+                    heap+=data[i];
+                }
+                else{
+                    heap+=data[i]+", ";
+                }
+            }
+        }
+        return heap+"]";
     }
-    private void swap(/*T[]*/String[] arr,int i,int j){
-        /*T*/String temp=arr[i];
+    private void swap(T[] arr,int i,int j){
+        T temp=arr[i];
         arr[i]=arr[j];
         arr[j]=temp;
     }
     public int size(){
         return length;
     }
-    public void add(/*T*/String s){
+    public void add(T s){
         if(length==data.length){
             resize();
         }
@@ -45,8 +53,6 @@ public class MyHeap/*<T extends Comparable<T>>*/{
             }
             else{
                 for(int i=(length-1)/2;s.compareTo(data[i])<0;i=(i-1)/2){
-                    //System.out.println(i+" "+s.compareTo(data[i]));
-                    //System.out.println(s+" "+data[i]);
                     swap(data,i,j);
                     j=i;
                 }
@@ -55,73 +61,75 @@ public class MyHeap/*<T extends Comparable<T>>*/{
         length++;
         
     }
-    public /*T*/String remove(){
-        //T removed=data[0];
-        String removed=data[0];
+    public T remove(){
+        T removed=data[0];
         swap(data,0,size()-1);
         data[size()-1]=null;
         length--;
-        int j=0;
-        //T s=data[j];
-        String s=data[j];
-        if(length>0){
-            if(isMax){
-                for(int i=2*j+1;i<data.length&&data[i]!=null&&data[i+1]!=null&&(s.compareTo(data[i])<0||s.compareTo(data[i+1])<0);i=2*j+1){
-                    //System.out.println(i+" "+s.compareTo(data[i]));
-                    //System.out.println(s+" "+data[i]);
-                    if((data[i+1]).compareTo(data[i])>0){
-                        swap(data,i+1,j);
-                        j=i+1;
-                    }
-                    else{
-                        swap(data,i,j);
-                        j=i;
-                    }
-                    
-                }
-            }
-            else{
-                for(int i=2*j+1;i<data.length&&data[i]!=null&&data[i+1]!=null&&(s.compareTo(data[i])>0||s.compareTo(data[i+1])>0);i=2*j+1){
-                    //System.out.println(i+" "+s.compareTo(data[i]));
-                    //System.out.println(s+" "+data[i]);
-                    if((data[i+1]).compareTo(data[i])<0){
-                        swap(data,i+1,j);
-                        j=i+1;
-                    }
-                    else{
-                        swap(data,i,j);
-                        j=i;
-                    }
-                    
-                }
-            }
-        }
-        return removed;
-        
+        pushDown(data, 0);
+        return removed;   
     }
-    public /*T*/String peek(){
+    public T remove(int limit){
+        T removed=data[0];
+        swap(data,0,size()-1);
+        data[size()-1]=null;
+        length--;
+        pushDown(data, 0,limit);
+        return removed;   
+    }
+    public T peek(){
         return data[0];
     }
     @SuppressWarnings("unchecked")
     private void resize(){
-        /*T[] resized=(T[])new Comparable[2*data.length+1];*/
-        String[] resized=new String[2*data.length+1];
+        T[] resized=(T[])new Comparable[2*data.length+1];
         for(int i=0;i<data.length;i++){
             resized[i]=data[i];
         }
         data=resized;
     }
-    /*public void Heapify(T[] dat){
+    private void pushDown(T[] dat,int index,int limit){
         if(isMax){
-            for(int ind=dat.length-1;ind>=0;ind--){
-                T s=dat[ind];
-                int j=ind;
-                //System.out.println(s);
-                System.out.println(ind+" "+s);
+            T s=dat[index];
+            int j=index;
+            int i=2*j+1;
+            for(;i<limit&&dat[i]!=null&&data[i+1]!=null&&(s.compareTo(dat[i])<0||s.compareTo(dat[i+1])<0);i=2*j+1){
+                if((dat[i+1]).compareTo(dat[i])>0){
+                    swap(dat,i+1,j);
+                    j=i+1;
+                }
+                else{
+                    swap(dat,i,j);
+                    j=i;
+                }
                 
-                for(int i=2*j+1;i<dat.length&&dat[i]!=null&&dat[i+1]!=null&&(s.compareTo(dat[i])<0||s.compareTo(dat[i+1])<0);i=2*j+1){
-                    //System.out.println(i+" "+s.compareTo(dat[i]));
-                    System.out.println(s+" "+dat[i]);
+            }
+            if(i+1<dat.length&&dat[i+1]==null&&s.compareTo(dat[i])<0){
+                swap(dat,i,j);
+            }
+    }
+    else{
+            T s=dat[index];
+            int j=index;
+            
+            for(int i=2*j+1;i<dat.length&&dat[i]!=null&&dat[i+1]!=null&&(s.compareTo(dat[i])>0||s.compareTo(dat[i+1])>0);i=2*j+1){
+                if((dat[i+1]).compareTo(dat[i])<0){
+                    swap(dat,i+1,j);
+                    j=i+1;
+                }
+                else{
+                    swap(dat,i,j);
+                    j=i;
+                }
+            } 
+    }
+    }
+    private void pushDown(T[] dat,int index){
+        if(isMax){
+                T s=dat[index];
+                int j=index;
+                int i=2*j+1;
+                for(;i<dat.length&&i+1<dat.length&&dat[i]!=null&&dat[i+1]!=null&&(s.compareTo(dat[i])<0||s.compareTo(dat[i+1])<0);i=2*j+1){
                     if((dat[i+1]).compareTo(dat[i])>0){
                         swap(dat,i+1,j);
                         j=i+1;
@@ -130,20 +138,18 @@ public class MyHeap/*<T extends Comparable<T>>*/{
                         swap(dat,i,j);
                         j=i;
                     }
+
                     
                 }
-            }
+                if(i+1<dat.length&&dat[i+1]==null&&s.compareTo(dat[i])<0){
+                    swap(dat,i,j);
+                }
         }
         else{
-            for(int ind=dat.length-1;ind>=0;ind--){
-                T s=dat[ind];
-                int j=ind;
-                //System.out.println(s);
-                
-                for(int i=2*j+1;i<dat.length&&dat[i]!=null&&dat[i+1]!=null&&(s.compareTo(dat[i])>0||s.compareTo(dat[i+1])>0);i=2*j+1){
-                    //System.out.println(i+" "+s.compareTo(dat[i]));
-                    System.out.println(s+" "+dat[i+1]);
-                    System.out.println((dat[i+1]).compareTo(dat[i]));
+                T s=dat[index];
+                int j=index;
+                int i=2*j+1;
+                for(;i<dat.length&&i+1<dat.length&&dat[i]!=null&&dat[i+1]!=null&&(s.compareTo(dat[i])>0||s.compareTo(dat[i+1])>0);i=2*j+1){
                     if((dat[i+1]).compareTo(dat[i])<0){
                         swap(dat,i+1,j);
                         j=i+1;
@@ -153,13 +159,40 @@ public class MyHeap/*<T extends Comparable<T>>*/{
                         j=i;
                     }
                 }
-            }  
+                if(i+1<dat.length&&dat[i+1]==null&&s.compareTo(dat[i])>0){
+                    swap(dat,i,j);
+                } 
         }
-    }*/
+    }
+    public void Heapify(T[] dat){
+            for(int ind=dat.length-1;ind>=0;ind--){
+               pushDown(dat,ind);
+            }
+            length=dat.length;
+            data=dat;
+    }
+    public static void heapSort(Integer[] dat){
+         MyHeap<Integer> h=new MyHeap<>();
+         int end=dat.length-1;
+         h.Heapify(dat); 
+         for(;end>=0;end--){
+             int r=h.remove(end);
+             dat[end]=r;
+         }
+
+    }
     
     public static void main(String[] args){
-        //MyHeap<Integer> h=new MyHeap<>(false);
+        MyHeap<Integer> h=new MyHeap<>(false);
         Random rand=new Random();
-        Integer[] d={31,415,5,6,72314,15,6,115,725,85,64,0,12,10,7};
+        Integer[] d=new Integer[1000000];
+        for(int i=0;i<1000000;i++){
+            d[i]=rand.nextInt();
+        }
+        long start,end;
+        start=System.currentTimeMillis();
+        MyHeap.heapSort(d);
+        end=System.currentTimeMillis();
+        System.out.println(end-start);
     }
 }
