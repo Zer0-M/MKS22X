@@ -170,18 +170,7 @@ public class MyHeap<T extends Comparable<T>>{
             }
             length=dat.length;
             data=dat;
-    }
-    public static void heapSort(Integer[] dat){
-         MyHeap<Integer> h=new MyHeap<>();
-         int end=dat.length-1;
-         h.Heapify(dat); 
-         for(;end>=0;end--){
-             int r=h.remove(end);
-             dat[end]=r;
-         }
-
-    }
-    
+    }    
     public static void main(String[] args){
         MyHeap<Integer> h=new MyHeap<>(false);
         Random rand=new Random();
