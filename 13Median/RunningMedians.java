@@ -44,12 +44,15 @@ public class RunningMedians{
     }
     public static void main(String[] args){
         RunningMedians r=new RunningMedians();
-        r.add(50);
-        r.add(30);
-        r.add(100);
-        r.add(10);
-        r.add(60);
-        r.add(101);
+		Random rand=new Random(23);
+        Integer[] d=new Integer[51];
+        for(int i=0;i<51;i++){
+            int val=rand.nextInt(100);
+            d[i]=val;
+        	r.add(val);
+        }
+        Arrays.sort(d);
+	    System.out.println(d[26]);
         System.out.println(r.getMedian());
     }
 }
