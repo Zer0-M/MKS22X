@@ -172,16 +172,6 @@ public class MyHeap<T extends Comparable<T>>{
             data=dat;
     }    
     public static void main(String[] args){
-        MyHeap<Integer> h=new MyHeap<>(false);
-        Random rand=new Random();
-        Integer[] d=new Integer[1000000];
-        for(int i=0;i<1000000;i++){
-            d[i]=rand.nextInt();
-        }
-        long start,end;
-        start=System.currentTimeMillis();
-        MyHeap.heapSort(d);
-        end=System.currentTimeMillis();
-        System.out.println(end-start);
+        
     }
 }
