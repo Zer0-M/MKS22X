@@ -104,7 +104,7 @@ public class MyHeap<T extends Comparable<T>>{
                 }
                 
             }
-            if(i+1<dat.length&&dat[i+1]==null&&s.compareTo(dat[i])<0){
+            if(i+1<dat.length&&dat[i]!=null&&dat[i+1]==null&&s.compareTo(dat[i])<0){
                 swap(dat,i,j);
             }
     }
@@ -141,7 +141,7 @@ public class MyHeap<T extends Comparable<T>>{
 
                     
                 }
-                if(i+1<dat.length&&dat[i+1]==null&&s.compareTo(dat[i])<0){
+                if(i+1<dat.length&&dat[i]!=null&&dat[i+1]==null&&s.compareTo(dat[i])<0){
                     swap(dat,i,j);
                 }
         }
@@ -159,7 +159,7 @@ public class MyHeap<T extends Comparable<T>>{
                         j=i;
                     }
                 }
-                if(i+1<dat.length&&dat[i+1]==null&&s.compareTo(dat[i])>0){
+                if(i+1<dat.length&&dat[i]!=null&&dat[i+1]==null&&s.compareTo(dat[i])>0){
                     swap(dat,i,j);
                 } 
         }
