@@ -15,7 +15,6 @@ public class FrontierQueue implements Frontier{
 	}
 	public boolean hasNext(){
 		try{
-			System.out.println(front.getFirst());
 			return front.getFirst()!=(null);
 		}catch (NoSuchElementException e){
 			return false;
