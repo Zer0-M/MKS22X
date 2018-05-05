@@ -108,7 +108,11 @@ public class Maze{
     public String toStringColor(){
         return colorize(toString());
     }
-    
+    public void changeStatus(Location n,char c){
+		int row=n.getX();
+        int col=n.getY();
+        maze[row][col]=c;
+    }
     //return a list of Locations that are:
     // adjacent to n and  not visited
     // all the Locations in this list should have their previous set to n.
@@ -117,19 +121,19 @@ public class Maze{
         int row=n.getX();
         int col=n.getY();
         Location up,down,right,left;
-        if(row+1<maze.length&&maze[row+1][col]==' '){
+        if(row+1<maze.length&&(maze[row+1][col]==' '||maze[row+1][col]=='E')){
             up=new Location(row+1,col,n);
             neighbors[0]=up;
         }
-        if(col+1<maze[row].length&&maze[row][col+1]==' '){
+        if(col+1<maze[row].length&&(maze[row][col+1]==' '||maze[row][col+1]=='E')){
             right=new Location(row,col+1,n);
             neighbors[3]=right;
         }
-        if(row-1>=0&&maze[row-1][col]==' '){
+        if(row-1>=0&&(maze[row-1][col]==' '||maze[row-1][col]=='E')){
             down=new Location(row-1,col,n);
             neighbors[1]=down;
         }
-        if(col-1>=0&&maze[row][col-1]==' '){
+        if(col-1>=0&&(maze[row][col-1]==' '||maze[row][col-1]=='E')){
             left=new Location(row,col-1,n);
             neighbors[2]=left;
         }

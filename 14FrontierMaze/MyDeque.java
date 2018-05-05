@@ -105,6 +105,9 @@ public class MyDeque<T>{
         if(start+1>=data.length){
             start=0;
         }
+        else if(start-1==end){
+            start=end;
+        }
         else{
             start+=1;
         }
@@ -131,6 +134,8 @@ public class MyDeque<T>{
         if(size()==0){
             throw new NoSuchElementException();
         }
+        System.out.println(Arrays.toString(data));
+        System.out.println(start+" "+end);
         return data[start];  
     }
     public T getLast(){
@@ -167,12 +172,12 @@ public class MyDeque<T>{
         MyDeque<Integer> D=new MyDeque<>();
         D.addLast(3);
         D.addLast(24);
-        D.addLast(41);
-        D.addLast(4141);
 	//System.out.println(D.removeFirst());
 	//System.out.println(D.removeLast());
 	//System.out.println(D.getLast());
-	//System.out.println(D.getFirst());
+
+    System.out.println(D.removeFirst());
+    System.out.println(D.getFirst());
         System.out.println(D);        
     }
     

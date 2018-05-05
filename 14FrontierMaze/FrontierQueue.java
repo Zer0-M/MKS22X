@@ -4,6 +4,9 @@ public class FrontierQueue implements Frontier{
 	public FrontierQueue(){
 		front=new ArrayDeque<>();
 	}
+	public String toString(){
+		return front.toString();
+	}
 	public void add(Location n){
 		front.addLast(n);
 	}
@@ -12,7 +15,8 @@ public class FrontierQueue implements Frontier{
 	}
 	public boolean hasNext(){
 		try{
-			return !(front.removeFirst().equals(null));
+			System.out.println(front.getFirst());
+			return front.getFirst()!=(null);
 		}catch (NoSuchElementException e){
 			return false;
 		}

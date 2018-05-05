@@ -12,7 +12,7 @@ public class FrontierStack implements Frontier{
 	}
 	public boolean hasNext(){
 		try{
-			return !(front.removeLast().equals(null));
+			return !(front.getLast().equals(null));
 		}catch (NoSuchElementException e){
 			return false;
 		}
