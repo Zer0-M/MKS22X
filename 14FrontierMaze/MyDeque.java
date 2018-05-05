@@ -80,7 +80,7 @@ public class MyDeque<T>{
         if(data[end]==null){
             data[end]=v;
         }
-        if(end+1>=data.length){
+        else if(end+1>=data.length){
             int ind=(end+1)%data.length;
             if(data[ind]==null){
                 data[ind]=v;
@@ -164,20 +164,15 @@ public class MyDeque<T>{
         data=newData; 
     }
     public static void main(String[] args){
-        MyDeque<Integer> D=new MyDeque<>(1);
-        D.addFirst(9);
-        D.addFirst(2525);
+        MyDeque<Integer> D=new MyDeque<>();
         D.addLast(3);
-        D.addFirst(56363);
         D.addLast(24);
-        D.addFirst(34);
         D.addLast(41);
-        D.addFirst(37);
         D.addLast(4141);
-	System.out.println(D.removeFirst());
-	System.out.println(D.removeLast());
-	System.out.println(D.getLast());
-	System.out.println(D.getFirst());
+	//System.out.println(D.removeFirst());
+	//System.out.println(D.removeLast());
+	//System.out.println(D.getLast());
+	//System.out.println(D.getFirst());
         System.out.println(D);        
     }
     

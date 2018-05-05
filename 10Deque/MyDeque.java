@@ -80,7 +80,7 @@ public class MyDeque<T>{
         if(data[end]==null){
             data[end]=v;
         }
-        if(end+1>=data.length){
+        else if(end+1>=data.length){
             int ind=(end+1)%data.length;
             if(data[ind]==null){
                 data[ind]=v;
