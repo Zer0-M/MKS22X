@@ -51,6 +51,32 @@ public class MazeSolver{
 
 	        }
         }
+        else if(mode==1){
+            frontier=new FrontierStack();
+            frontier.add(maze.getStart());
+            while(frontier.hasNext()){
+                Location next=frontier.next();
+                maze.changeStatus(next, '.');
+                if(next.getX()==maze.getEnd().getX()&&next.getY()==maze.getEnd().getY()){
+                    //System.out.println(next);
+                    while(next.getPrev()!=null){
+                        maze.changeStatus(next, '@');
+                        next=next.getPrev();
+                    }
+                    maze.changeStatus(maze.getStart(),'S');
+                    maze.changeStatus(maze.getEnd(),'E');
+                    return true;
+                }
+                if(hasNeighbors(next)){
+                    for(int i=0;i<4;i++){
+                        if(maze.getNeighbors(next)[i]!=null){
+                            frontier.add(maze.getNeighbors(next)[i]);
+                            maze.changeStatus(maze.getNeighbors(next)[i], '?');
+                        }
+                    }
+                }
+            }
+        }
       //initialize your frontier
       //while there is stuff in the frontier:
       //  get the next location
@@ -66,7 +92,7 @@ public class MazeSolver{
     }
     public static void main(String[] args){
         MazeSolver m = new MazeSolver("data7.dat");
-        m.solve();
+        m.solve(0);
         System.out.println(m);
     }
   }
