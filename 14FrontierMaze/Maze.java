@@ -113,19 +113,41 @@ public class Maze{
     // adjacent to n and  not visited
     // all the Locations in this list should have their previous set to n.
     public Location[] getNeighbors(Location n){
-        return null;
+        Location[] neighbors=new Location[4];
+        int row=n.getX();
+        int col=n.getY();
+        Location up,down,right,left;
+        if(row+1<maze.length&&maze[row+1][col]==' '){
+            up=new Location(row+1,col,n);
+            neighbors[0]=up;
+        }
+        if(col+1<maze[row].length&&maze[row][col+1]==' '){
+            right=new Location(row,col+1,n);
+            neighbors[3]=right;
+        }
+        if(row-1>=0&&maze[row-1][col]==' '){
+            down=new Location(row-1,col,n);
+            neighbors[1]=down;
+        }
+        if(col-1>=0&&maze[row][col-1]==' '){
+            left=new Location(row,col-1,n);
+            neighbors[2]=left;
+        }
+        return neighbors;
     }
     
     public Location getStart(){
-        return null;
+        return start;
     }
     
     public Location getEnd(){
-        return null;
+        return end;
     }
     public static void main(String[] args){
         Maze m = new Maze("data1.dat");
-        System.out.println(m.toStringColor());
+        System.out.println(m);
+        System.out.println(Arrays.toString(m.getNeighbors(m.getStart())));
+
     }
     
     
