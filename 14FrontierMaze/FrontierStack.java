@@ -1,8 +1,8 @@
 import java.util.*;
 public class FrontierStack implements Frontier{
-	private MyDeque<Location> front;
+	private ArrayDeque<Location> front;
 	public FrontierStack(){
-		front=new MyDeque<>();
+		front=new ArrayDeque<>();
 	}
 	public void add(Location n){
 		front.addLast(n);

@@ -1,8 +1,8 @@
 import java.util.*;
 public class FrontierQueue implements Frontier{
-	private MyDeque<Location> front;
+	private ArrayDeque<Location> front;
 	public FrontierQueue(){
-		front=new MyDeque<>();
+		front=new ArrayDeque<>();
 	}
 	public void add(Location n){
 		front.addLast(n);
