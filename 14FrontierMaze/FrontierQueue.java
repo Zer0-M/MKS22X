@@ -11,7 +11,11 @@ public class FrontierQueue implements Frontier{
 		return front.removeFirst();
 	}
 	public boolean hasNext(){
-		return front.removeFirst().equals(null);
+		try{
+			return !(front.removeFirst().equals(null));
+		}catch (NoSuchElementException e){
+			return false;
+		}
 	}
 	public static void main(String[] args){
 		FrontierQueue F=new FrontierQueue();
@@ -24,5 +28,6 @@ public class FrontierQueue implements Frontier{
 		System.out.println(F.next());
 		System.out.println(F.next());
 		System.out.println(F.next());
+		System.out.println(F.hasNext());
 	}
 }
