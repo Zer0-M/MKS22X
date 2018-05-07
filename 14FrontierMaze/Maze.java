@@ -143,15 +143,26 @@ public class Maze{
     public Location getStart(){
         return start;
     }
-    
+    public int spotsExplored(){
+    int count=0;
+       for(int i=0;i<maze.length;i++){
+           for(int j=0;j<maze[i].length;j++){
+               if(maze[i][j]=='.'||maze[i][j]=='@'){
+                    count++;
+               }
+           }
+       }
+       return count; 
+    }  
     public Location getEnd(){
         return end;
     }
     public static void main(String[] args){
-        Maze m = new Maze("data1.dat");
-        System.out.println(m);
-        System.out.println(Arrays.toString(m.getNeighbors(m.getStart())));
-
+        Maze m = new Maze("data7.dat");
+        System.out.println(m.getStart());
+        System.out.println(m.getEnd());
+        System.out.println(m.getStart().compareTo(m.getEnd()));
+        
     }
     
     

@@ -1,9 +1,11 @@
 public class MazeSolver{
     private Maze maze;
     private Frontier frontier;
+    private boolean animate;
   
     public MazeSolver(String mazeText){
       maze=new Maze(mazeText);
+      animate=false;
     }
   
     //Default to BFS
@@ -26,9 +28,15 @@ public class MazeSolver{
             frontier=new FrontierQueue();
             frontier.add(maze.getStart());
             while(frontier.hasNext()){
+                if(animate){
+                    clearTerminal();
+                    System.out.println(this);
+              
+                    wait(100);
+                }
                 Location next=frontier.next();
                 maze.changeStatus(next, '.');
-                if(next.getX()==maze.getEnd().getX()&&next.getY()==maze.getEnd().getY()){
+                if(next.compareTo(maze.getEnd())==0){
                     //System.out.println(next);
                     while(next.getPrev()!=null){
                         maze.changeStatus(next, '@');
@@ -36,6 +44,7 @@ public class MazeSolver{
                     }
                     maze.changeStatus(maze.getStart(),'S');
                     maze.changeStatus(maze.getEnd(),'E');
+                    System.out.println(maze.spotsExplored());
                     return true;
                 }
                 if(hasNeighbors(next)){
@@ -55,16 +64,55 @@ public class MazeSolver{
             frontier=new FrontierStack();
             frontier.add(maze.getStart());
             while(frontier.hasNext()){
+                if(animate){
+                    clearTerminal();
+                    System.out.println(this);
+              
+                    wait(100);
+                }
                 Location next=frontier.next();
                 maze.changeStatus(next, '.');
-                if(next.getX()==maze.getEnd().getX()&&next.getY()==maze.getEnd().getY()){
-                    //System.out.println(next);
+                if(next.compareTo(maze.getEnd())==0){
                     while(next.getPrev()!=null){
                         maze.changeStatus(next, '@');
                         next=next.getPrev();
                     }
                     maze.changeStatus(maze.getStart(),'S');
                     maze.changeStatus(maze.getEnd(),'E');
+                    System.out.println(maze.spotsExplored());
+                    return true;
+                }
+                if(hasNeighbors(next)){
+                    for(int i=0;i<4;i++){
+                        if(maze.getNeighbors(next)[i]!=null){
+                            frontier.add(maze.getNeighbors(next)[i]);
+                            maze.changeStatus(maze.getNeighbors(next)[i], '?');
+                        }
+                    }
+                }
+            }
+        }
+        if(mode==2){
+            
+            frontier=new FrontierPriorityQueue();
+            frontier.add(maze.getStart());
+            while(frontier.hasNext()){
+                if(animate){
+                    clearTerminal();
+                    System.out.println(this);
+              
+                    wait(100);
+                }
+                Location next=frontier.next();
+                maze.changeStatus(next, '.');
+                if(next.compareTo(maze.getEnd())==0){
+                    while(next.getPrev()!=null){
+                        maze.changeStatus(next, '@');
+                        next=next.getPrev();
+                    }
+                    maze.changeStatus(maze.getStart(),'S');
+                    maze.changeStatus(maze.getEnd(),'E');
+                    System.out.println(maze.spotsExplored());
                     return true;
                 }
                 if(hasNeighbors(next)){
@@ -86,13 +134,37 @@ public class MazeSolver{
       //when there are no more values in the frontier return false
       return false;
     }
-  
+    private void wait(int millis){
+        try {
+          Thread.sleep(millis);
+        }
+        catch (InterruptedException e) {
+        }
+      }
+    
+    
+      public void clearTerminal(){
+    
+        //erase terminal, go to top left of screen.
+    
+        System.out.println("\033[2J\033[1;1H");
+    
+      }
     public String toString(){
       return maze.toString();
     }
     public static void main(String[] args){
-        MazeSolver m = new MazeSolver("data7.dat");
-        m.solve(0);
-        System.out.println(m);
+        MazeSolver bfs = new MazeSolver("data7.dat");
+        bfs.solve(0);
+        MazeSolver dfs = new MazeSolver("data7.dat");
+        dfs.solve(1);
+        MazeSolver priority=new MazeSolver("data7.dat");
+        priority.solve(2);
+        System.out.println("bfs");
+        System.out.println(bfs);
+        System.out.println("dfs");
+        System.out.println(dfs);
+        System.out.println("priority");
+        System.out.println(priority);
     }
   }
