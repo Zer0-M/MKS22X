@@ -12,6 +12,7 @@ public class Location implements Comparable<Location>{
 	x=_x;
 	y=_y;
         previous=prev;
+        dist=distance;
     }
     public String toString(){
 	return "["+x+","+y+"]";

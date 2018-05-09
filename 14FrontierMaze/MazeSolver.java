@@ -5,7 +5,7 @@ public class MazeSolver{
   
     public MazeSolver(String mazeText){
       maze=new Maze(mazeText);
-      animate=false;
+      animate=true;
     }
   
     //Default to BFS
@@ -91,6 +91,39 @@ public class MazeSolver{
                     }
                 }
             }
+            
+        }
+        else if(mode==2){
+            frontier=new FrontierPriorityQueue();
+            frontier.add(maze.getStart());
+            while(frontier.hasNext()){
+                if(animate){
+                    clearTerminal();
+                    System.out.println(this);
+              
+                    wait(100);
+                }
+                Location next=frontier.next();
+                maze.changeStatus(next, '.');
+                if(next.compareTo(maze.getEnd())==0){
+                    while(next.getPrev()!=null){
+                        maze.changeStatus(next, '@');
+                        next=next.getPrev();
+                    }
+                    maze.changeStatus(maze.getStart(),'S');
+                    maze.changeStatus(maze.getEnd(),'E');
+                    System.out.println(maze.spotsExplored());
+                    return true;
+                }
+                if(hasNeighbors(next)){
+                    for(int i=0;i<4;i++){
+                        if(maze.getNeighbors(next)[i]!=null){
+                            frontier.add(maze.getNeighbors(next)[i]);
+                            maze.changeStatus(maze.getNeighbors(next)[i], '?');
+                        }
+                    }
+                }
+            }
         }
       //initialize your frontier
       //while there is stuff in the frontier:
@@ -122,12 +155,16 @@ public class MazeSolver{
     }
     public static void main(String[] args){
         MazeSolver bfs = new MazeSolver("data7.dat");
-        bfs.solve(0);
+        //bfs.solve(0);
         MazeSolver dfs = new MazeSolver("data7.dat");
-        dfs.solve(1);
+        //dfs.solve(1);
+        MazeSolver priority =new MazeSolver("data4.dat");
+        priority.solve(2);
         System.out.println("bfs");
         System.out.println(bfs);
         System.out.println("dfs");
         System.out.println(dfs);
+        System.out.println("priority");
+        System.out.println(priority);
     }
   }

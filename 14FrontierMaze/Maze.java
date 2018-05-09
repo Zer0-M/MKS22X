@@ -40,6 +40,8 @@ public class Maze{
                 }
                 
             }
+            int dist=distance(start);
+            start=new Location(start.getX(),start.getY(),null,dist);
             if(Ecount>1||Ecount==0){
                 throw new IllegalStateException();
             }
@@ -137,19 +139,19 @@ public class Maze{
         if(col+1<maze[row].length&&(maze[row][col+1]==' '||maze[row][col+1]=='E')){
             right=new Location(row,col+1,n);
 	    dist=distance(right);
-	    right=new Location(row+1,col,n,dist);
+	    right=new Location(row,col+1,n,dist);
             neighbors[3]=right;
         }
         if(row-1>=0&&(maze[row-1][col]==' '||maze[row-1][col]=='E')){
             down=new Location(row-1,col,n);
 	    dist=distance(down);
-	    down=new Location(row+1,col,n,dist);
+	    down=new Location(row-1,col,n,dist);
             neighbors[1]=down;
         }
         if(col-1>=0&&(maze[row][col-1]==' '||maze[row][col-1]=='E')){
             left=new Location(row,col-1,n);
 	    dist=distance(left);
-	    left=new Location(row+1,col,n,dist);
+	    left=new Location(row,col-1,n,dist);
             neighbors[2]=left;
         }
         return neighbors;
@@ -174,9 +176,11 @@ public class Maze{
     }
     public static void main(String[] args){
         Maze m = new Maze("data7.dat");
-        System.out.println(m.getStart());
+        Location l=m.getStart();
+        Location[] arr=m.getNeighbors(l);
+        System.out.println(arr[3].getDistance());
         System.out.println(m.getEnd());
-        System.out.println(m.getStart().compareTo(m.getEnd()));
+        System.out.println(m.getEnd().compareTo(m.getEnd()));
         
     }
     

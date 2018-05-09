@@ -16,15 +16,11 @@ public class FrontierPriorityQueue implements Frontier{
         return priority.peek()!=null;
     }
     public static void main(String[] args){
-        Location a=new Location(0,0,null);
-        Location b=new Location(3,4,null);
-        Location c=new Location(5,6,null);
-        Location d=new Location(2,1,null);
-        Location e=new Location(10,0,null);
-        Location f=new Location(34,20,null);
+        Location l=new Location(3,2,null,1);
+        Location f=new Location(1,1,null,4);
         FrontierPriorityQueue q=new FrontierPriorityQueue();
-        q.add(a);
-        q.add(b);
+        q.add(l);
+        q.add(f);
         System.out.println(q);
     }
 }
