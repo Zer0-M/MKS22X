@@ -1,8 +1,14 @@
+import java.util.*;
 public class Location implements Comparable<Location>{
-    private int x,y;
+    private int x,y,dist;
     private Location previous;
 
     public Location(int _x, int _y, Location prev){
+	x=_x;
+	y=_y;
+        previous=prev;
+    }
+    public Location(int _x, int _y, Location prev,int distance){
 	x=_x;
 	y=_y;
         previous=prev;
@@ -19,15 +25,14 @@ public class Location implements Comparable<Location>{
     public Location getPrev(){
 	return previous;
     }
+    public Integer getDistance(){
+	return dist;
+    }
     public int compareTo(Location other){
-        int x_dist=other.getX()-getX();
-        int y_dist=other.getY()-getY();
-        int total=Math.abs(x_dist)+Math.abs(y_dist);//Math.sqrt(Math.pow(x_dist,2)+Math.pow(y_dist,2));
-        return total;
+        return getDistance().compareTo(other.getDistance());
     }
     public static void main(String[] args){
         Location l=new Location(1,5,null);
         Location f=new Location(5,2,null);
-        System.out.println(f.compareTo(l));
     }
 }

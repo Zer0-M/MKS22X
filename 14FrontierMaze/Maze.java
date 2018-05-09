@@ -108,6 +108,12 @@ public class Maze{
     public String toStringColor(){
         return colorize(toString());
     }
+    public int distance(Location n){
+	int x_dist=n.getX()-getEnd().getX();
+	int y_dist=n.getY()-getEnd().getY();
+	int total= Math.abs(x_dist)+Math.abs(y_dist);
+	return total;
+    }
     public void changeStatus(Location n,char c){
 		int row=n.getX();
         int col=n.getY();
@@ -120,21 +126,30 @@ public class Maze{
         Location[] neighbors=new Location[4];
         int row=n.getX();
         int col=n.getY();
+	int dist=0;
         Location up,down,right,left;
         if(row+1<maze.length&&(maze[row+1][col]==' '||maze[row+1][col]=='E')){
             up=new Location(row+1,col,n);
+	    dist=distance(up);
+	    up=new Location(row+1,col,n,dist);
             neighbors[0]=up;
         }
         if(col+1<maze[row].length&&(maze[row][col+1]==' '||maze[row][col+1]=='E')){
             right=new Location(row,col+1,n);
+	    dist=distance(right);
+	    right=new Location(row+1,col,n,dist);
             neighbors[3]=right;
         }
         if(row-1>=0&&(maze[row-1][col]==' '||maze[row-1][col]=='E')){
             down=new Location(row-1,col,n);
+	    dist=distance(down);
+	    down=new Location(row+1,col,n,dist);
             neighbors[1]=down;
         }
         if(col-1>=0&&(maze[row][col-1]==' '||maze[row][col-1]=='E')){
             left=new Location(row,col-1,n);
+	    dist=distance(left);
+	    left=new Location(row+1,col,n,dist);
             neighbors[2]=left;
         }
         return neighbors;
