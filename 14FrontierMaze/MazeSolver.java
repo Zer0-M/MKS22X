@@ -5,7 +5,7 @@ public class MazeSolver{
   
     public MazeSolver(String mazeText){
       maze=new Maze(mazeText);
-      animate=true;
+      animate=false;
     }
   
     //Default to BFS
@@ -44,7 +44,6 @@ public class MazeSolver{
                     }
                     maze.changeStatus(maze.getStart(),'S');
                     maze.changeStatus(maze.getEnd(),'E');
-                    System.out.println(maze.spotsExplored());
                     return true;
                 }
                 if(hasNeighbors(next)){
@@ -79,7 +78,6 @@ public class MazeSolver{
                     }
                     maze.changeStatus(maze.getStart(),'S');
                     maze.changeStatus(maze.getEnd(),'E');
-                    System.out.println(maze.spotsExplored());
                     return true;
                 }
                 if(hasNeighbors(next)){
@@ -100,11 +98,12 @@ public class MazeSolver{
                 if(animate){
                     clearTerminal();
                     System.out.println(this);
-              
+                    
                     wait(100);
                 }
                 Location next=frontier.next();
                 maze.changeStatus(next, '.');
+		
                 if(next.compareTo(maze.getEnd())==0){
                     while(next.getPrev()!=null){
                         maze.changeStatus(next, '@');
@@ -112,7 +111,6 @@ public class MazeSolver{
                     }
                     maze.changeStatus(maze.getStart(),'S');
                     maze.changeStatus(maze.getEnd(),'E');
-                    System.out.println(maze.spotsExplored());
                     return true;
                 }
                 if(hasNeighbors(next)){
@@ -125,6 +123,42 @@ public class MazeSolver{
                 }
             }
         }
+	else if(mode==3){
+	    maze.setAStar(true);
+            frontier=new FrontierPriorityQueue();
+            frontier.add(maze.getStart());
+            while(frontier.hasNext()){
+                Location next=frontier.next();
+		
+		if(animate){
+                    clearTerminal();
+                    System.out.println(this);
+                    System.out.println(next.compareTo(maze.getEnd()));
+                    wait(100);
+                }
+                maze.changeStatus(next, '.');
+		
+                if(next.compareTo(maze.getEnd())==0){
+		    System.out.println(next);
+                    while(next.getPrev()!=null){
+                        maze.changeStatus(next, '@');
+                        next=next.getPrev();
+                    }
+                    maze.changeStatus(maze.getStart(),'S');
+                    maze.changeStatus(maze.getEnd(),'E');
+                    return true;
+                }
+                if(hasNeighbors(next)){
+                    for(int i=0;i<4;i++){
+                        if(maze.getNeighbors(next)[i]!=null){
+                            frontier.add(maze.getNeighbors(next)[i]);
+                            maze.changeStatus(maze.getNeighbors(next)[i], '?');
+                        }
+                    }
+                }
+            }
+        }
+
       //initialize your frontier
       //while there is stuff in the frontier:
       //  get the next location
@@ -151,20 +185,24 @@ public class MazeSolver{
     
       }
     public String toString(){
-      return maze.toString();
+      return maze.toStringColor();
     }
     public static void main(String[] args){
         MazeSolver bfs = new MazeSolver("data7.dat");
-        //bfs.solve(0);
+        bfs.solve(0);
         MazeSolver dfs = new MazeSolver("data7.dat");
-        //dfs.solve(1);
-        MazeSolver priority =new MazeSolver("data4.dat");
+        dfs.solve(1);
+        MazeSolver priority =new MazeSolver("data7.dat");
         priority.solve(2);
+	MazeSolver AStar =new MazeSolver("data7.dat");
+        System.out.println(AStar.solve(3));
         System.out.println("bfs");
         System.out.println(bfs);
         System.out.println("dfs");
         System.out.println(dfs);
         System.out.println("priority");
         System.out.println(priority);
+        System.out.println("A*");
+        System.out.println(AStar);
     }
   }

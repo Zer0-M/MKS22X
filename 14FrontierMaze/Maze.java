@@ -3,8 +3,12 @@ import java.io.*;
 public class Maze{
     private Location start,end;
     private char[][] maze;
+    private boolean isAStar;
+    private int distanceSoFar;
     
     public Maze(String filename) {
+	distanceSoFar=0;
+	isAStar=false;
         int Scount=0;
         int Ecount=0;
         try{
@@ -52,6 +56,9 @@ public class Maze{
             System.exit(0);
             System.out.println("file not found");
         }
+    }
+    public void setAStar(boolean isA){
+	isAStar=isA;
     }
     
     // '#' - wall 
@@ -113,11 +120,17 @@ public class Maze{
     public int distance(Location n){
 	int x_dist=n.getX()-getEnd().getX();
 	int y_dist=n.getY()-getEnd().getY();
-	int total= Math.abs(x_dist)+Math.abs(y_dist);
+	int total=0;
+	if(isAStar){
+	    total= Math.abs(x_dist)+Math.abs(y_dist)+distanceSoFar;
+	}
+	else{
+            total= Math.abs(x_dist)+Math.abs(y_dist);
+	}
 	return total;
     }
     public void changeStatus(Location n,char c){
-		int row=n.getX();
+	int row=n.getX();
         int col=n.getY();
         maze[row][col]=c;
     }
@@ -130,6 +143,7 @@ public class Maze{
         int col=n.getY();
 	int dist=0;
         Location up,down,right,left;
+	distanceSoFar++;
         if(row+1<maze.length&&(maze[row+1][col]==' '||maze[row+1][col]=='E')){
             up=new Location(row+1,col,n);
 	    dist=distance(up);
