@@ -5,7 +5,7 @@ public class MazeSolver{
   
     public MazeSolver(String mazeText){
       maze=new Maze(mazeText);
-      animate=false;
+      animate=true;
     }
   
     //Default to BFS
@@ -133,13 +133,11 @@ public class MazeSolver{
 		if(animate){
                     clearTerminal();
                     System.out.println(this);
-                    System.out.println(next.compareTo(maze.getEnd()));
                     wait(100);
                 }
                 maze.changeStatus(next, '.');
 		
-                if(next.compareTo(maze.getEnd())==0){
-		    System.out.println(next);
+                if(next.getX()==maze.getEnd().getX()&&next.getY()==maze.getEnd().getY()){
                     while(next.getPrev()!=null){
                         maze.changeStatus(next, '@');
                         next=next.getPrev();
@@ -185,16 +183,16 @@ public class MazeSolver{
     
       }
     public String toString(){
-      return maze.toStringColor();
+      return maze.toString();
     }
     public static void main(String[] args){
-        MazeSolver bfs = new MazeSolver("data7.dat");
+        MazeSolver bfs = new MazeSolver("data1.dat");
         bfs.solve(0);
-        MazeSolver dfs = new MazeSolver("data7.dat");
+        MazeSolver dfs = new MazeSolver("data1.dat");
         dfs.solve(1);
-        MazeSolver priority =new MazeSolver("data7.dat");
+        MazeSolver priority =new MazeSolver("data1.dat");
         priority.solve(2);
-	MazeSolver AStar =new MazeSolver("data7.dat");
+	MazeSolver AStar =new MazeSolver("data1.dat");
         System.out.println(AStar.solve(3));
         System.out.println("bfs");
         System.out.println(bfs);
