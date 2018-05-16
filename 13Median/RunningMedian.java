@@ -45,20 +45,20 @@ public class RunningMedian{
         }
 	length++;
     }
-    public int getMedian(){
+    public double getMedian(){
         return median;
     }
     public static void main(String[] args){
         RunningMedian r=new RunningMedian();
 	Random rand=new Random();
-        Integer[] d=new Integer[51];
-        for(int i=0;i<51;i++){
+        Integer[] d=new Integer[1000000];
+        for(int i=0;i<1000000;i++){
             int val=rand.nextInt();
             d[i]=val;
 	    r.add(val);
         }
         Arrays.sort(d);
-	System.out.println(d[25]);
+	System.out.println((d[499999]+d[500000])/2);
         System.out.println(r.getMedian());
     }
 }
