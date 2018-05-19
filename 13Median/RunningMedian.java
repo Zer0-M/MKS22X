@@ -1,19 +1,19 @@
 import java.util.*;
 public class RunningMedian{
-    MyHeap<Integer> max;
-    MyHeap<Integer> min;
-    int median;
+    MyHeap<Double> max;
+    MyHeap<Double> min;
+    double median;
     int length;
     public RunningMedian(){
         max=new MyHeap<>();
         min=new MyHeap<>(false);
         median=0;
-	length=0;
+        length=0;
     }
     public int size(){
-	return length;
+        return length;
     }
-    public void add(int value){
+    public void add(double value){
         if(max.size()==0&&min.size()==0){
             max.add(value);
         }
@@ -43,22 +43,22 @@ public class RunningMedian{
             }
             median=(max.peek()+min.peek())/2;            
         }
-	length++;
+        length++;
     }
     public double getMedian(){
         return median;
     }
     public static void main(String[] args){
         RunningMedian r=new RunningMedian();
-	Random rand=new Random();
-        Integer[] d=new Integer[1000000];
+        Random rand=new Random();
+        Double[] d=new Double[1000000];
         for(int i=0;i<1000000;i++){
-            int val=rand.nextInt();
+            double val=(double)rand.nextInt();
             d[i]=val;
-	    r.add(val);
+            r.add(val);
         }
         Arrays.sort(d);
-	System.out.println((d[499999]+d[500000])/2);
+        System.out.println((d[499999]+d[500000])/2);
         System.out.println(r.getMedian());
     }
 }
