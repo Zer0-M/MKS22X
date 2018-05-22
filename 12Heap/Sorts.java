@@ -1,6 +1,6 @@
 import java.util.*;
 public class Sorts{
-    public static void heapSort(Integer[] dat){
+    public static void heapsort(Integer[] dat){
 	MyHeap<Integer> h=new MyHeap<>();
 	int end=dat.length-1;
 	h.Heapify(dat); 
