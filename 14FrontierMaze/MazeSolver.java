@@ -5,7 +5,7 @@ public class MazeSolver{
   
     public MazeSolver(String mazeText){
       maze=new Maze(mazeText);
-      animate=true;
+      animate=false;
     }
   
     //Default to BFS
@@ -186,13 +186,13 @@ public class MazeSolver{
       return maze.toString();
     }
     public static void main(String[] args){
-        MazeSolver bfs = new MazeSolver("data1.dat");
+        MazeSolver bfs = new MazeSolver("data7.dat");
         bfs.solve(0);
-        MazeSolver dfs = new MazeSolver("data1.dat");
+        MazeSolver dfs = new MazeSolver("data7.dat");
         dfs.solve(1);
-        MazeSolver priority =new MazeSolver("data1.dat");
+        MazeSolver priority =new MazeSolver("data7.dat");
         priority.solve(2);
-	MazeSolver AStar =new MazeSolver("data1.dat");
+	MazeSolver AStar =new MazeSolver("data7.dat");
         System.out.println(AStar.solve(3));
         System.out.println("bfs");
         System.out.println(bfs);

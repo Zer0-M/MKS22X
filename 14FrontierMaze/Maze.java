@@ -69,14 +69,29 @@ public class Maze{
     // '@' - part of solution
     // 'S' - starting space (do not replace this)
     public String toString(){
-        String str="";
-        for(int i=0;i<maze.length;i++){
-            for(int j=0;j<maze[0].length;j++){
-                str+=maze[i][j];
-            }
-            str+="\n";
-        }
-        return str;
+        //String str="";
+        //for(int i=0;i<maze.length;i++){
+        //    for(int j=0;j<maze[0].length;j++){
+        //        str+=maze[i][j];
+        //    }
+        //    str+=" \n";
+        //}
+        //return str;
+	int maxr = maze.length;
+	int maxc = maze[0].length;
+	String ans = "";
+	for(int i = 0; i < maxr * maxc; i++){
+	    int row = i/maxc;
+	    int col = i%maxc;
+	    char c =  maze[row][col];
+	    ans+=c;
+	    if( col == maxc-1 ){
+		ans += "\r";
+		ans += "\n";
+	    }
+
+	}
+	return ans + "\n";
     }
     private static String go(int x,int y){
         return ("\033[" + x + ";" + y + "H");
