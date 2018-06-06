@@ -86,7 +86,6 @@ public class Maze{
 	    char c =  maze[row][col];
 	    ans+=c;
 	    if( col == maxc-1 ){
-		ans += "\r";
 		ans += "\n";
 	    }
 
